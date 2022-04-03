@@ -1,0 +1,40 @@
+{
+  "aircrafts": [
+    {
+      "name": "PA28",
+      "callSign": "F-GFZA",
+      "stations": [
+        {
+          "name": "Masse à vide",
+          "weight": 721.2,
+          "leverArm": 2.223,
+          "maxWeight": 0
+        },
+        {
+          "name": "Pilote et passager avant",
+          "weight": 0.0,
+          "leverArm": 2.045,
+          "maxWeight": 0
+        },
+        {
+          "name": "Passager arrière",
+          "weight": 0.0,
+          "leverArm": 3.000,
+          "maxWeight": 0
+        },
+        {
+          "name": "Bagages",
+          "weight": 0.0,
+          "leverArm": 3.627,
+          "maxWeight": 91.0
+        },
+        {
+          "name": "Carburant (max : 182 l / 131 kg)",
+          "weight": 131.0,
+          "leverArm": 2.413,
+          "maxWeight": 131.0
+        }
+      ]
+    }
+  ]
+}

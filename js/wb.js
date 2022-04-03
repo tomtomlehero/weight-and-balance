@@ -8,6 +8,8 @@ var GRAPH_RIGHT = 475;
 var GRAPH_HEIGHT = 350;
 var GRAPH_WIDTH = 450;
 
+var wb;
+
 var frontRow = 0;
 
 function draw() {
@@ -60,9 +62,35 @@ function draw() {
 
 
 $(document).ready(function () {
-    registerEvents()
+    loadJson();
+    populateWbTable();
+    registerEvents();
     draw();
 });
+
+function loadJson() {
+    $.getJSON("json/wb.json", function(data){
+        wb = data;
+        console.log(wb);
+    }).fail(function(){
+        console.log("An error has occurred.");
+    });
+}
+
+function populateWbTable() {
+    var row =
+        '          <tr class="">' +
+        '            <td>Sièges avant</td>' +
+        '            <td><input class="slider" id="frontRowSlider" max="200" min="0" type="range" value="0"></td>' +
+        '            <td>' +
+        '              <input class="form-control form-control-sm" id="frontRow" type="text" value="0">' +
+        '            </td>' +
+        '            <td>2,045</td>' +
+        '            <td>368,100</td>' +
+        '          </tr>';
+    $("#wbTable tbody").append(row);
+}
+
 
 function registerEvents() {
     $("#frontRow").on("input", change);
