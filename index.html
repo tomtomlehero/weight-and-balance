@@ -19,6 +19,10 @@
 
 <div class="container-fluid">
   <h1>Masse et Centrage</h1>
+  <p class="bg-warning">
+    Cet outil de calcul de masse et centrage n'est qu'un outil auxiliaire d'aide à la préparation de vol.<br/>
+    Il ne remplace en aucun cas le seul outil officiel de calcul de masse et centrage qui est le manuel de vol publié par le constructeur.
+  </p>
   <p>PA28 F-GFZA</p>
 
   <div class="row">
@@ -35,6 +39,13 @@
           </thead>
           <tbody>
           <tr>
+<!--
+            <td>Masse à vide de base</td>
+            <td></td>
+            <td>724,0</td>
+            <td>2,230</td>
+            <td>1614,520</td>
+-->
             <td class="col-md-3">Masse à vide de base</td>
             <td class="col-md-2"></td>
             <td class="col-md-1">724,0</td>
@@ -45,9 +56,7 @@
             <td>Sièges avant</td>
             <td><input class="slider" id="frontRowSlider" max="200" min="0" type="range" value="0"></td>
             <td>
-              <div class="form-group">
-                <input class="form-control input-sm" id="frontRow" type="text" value="0">
-              </div>
+              <input class="form-control form-control-sm" id="frontRow" type="text" value="0">
             </td>
             <td>2,045</td>
             <td>368,100</td>
