@@ -8,7 +8,7 @@ var GRAPH_RIGHT = 475;
 var GRAPH_HEIGHT = 350;
 var GRAPH_WIDTH = 450;
 
-var jaja = 0;
+var frontRow = 0;
 
 function draw() {
     var canvas = document.getElementById( "wb" );
@@ -53,7 +53,7 @@ function draw() {
     context.beginPath();
     context.strokeStyle = "#339";
     context.moveTo(GRAPH_LEFT, GRAPH_TOP);
-    context.lineTo(jaja, jaja);
+    context.lineTo(frontRow, frontRow);
     context.stroke();
 
 }
@@ -65,11 +65,18 @@ $(document).ready(function () {
 });
 
 function registerEvents() {
-    $("#jaja").on("input", change);
+    $("#frontRow").on("input", change);
+    $("#frontRowSlider").on("input", changeS);
 }
 
 function change() {
-    jaja = $("#jaja").val();
-    $("#toto").val(10 * jaja);
+    frontRow = $("#frontRow").val();
+    $("#frontRowSlider").val(frontRow);
+    draw();
+}
+
+function changeS() {
+    frontRow = $("#frontRowSlider").val();
+    $("#frontRow").val(frontRow);
     draw();
 }
