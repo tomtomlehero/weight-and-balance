@@ -10,7 +10,8 @@ var GRAPH_WIDTH = 450;
 
 var wb;
 
-var frontRow = 0;
+var station1Weight = 0;
+var station2Weight = 0;
 
 function draw() {
     var canvas = document.getElementById( "wb" );
@@ -55,7 +56,7 @@ function draw() {
     context.beginPath();
     context.strokeStyle = "#339";
     context.moveTo(GRAPH_LEFT, GRAPH_TOP);
-    context.lineTo(frontRow, frontRow);
+    context.lineTo(station1Weight, station1Weight);
     context.stroke();
 
 }
@@ -63,7 +64,7 @@ function draw() {
 
 $(document).ready(function () {
     loadJson();
-    populateWbTable();
+    // populateWbTable();
     registerEvents();
     draw();
 });
@@ -81,9 +82,9 @@ function populateWbTable() {
     var row =
         '          <tr class="">' +
         '            <td>Sièges avant</td>' +
-        '            <td><input class="slider" id="frontRowSlider" max="200" min="0" type="range" value="0"></td>' +
+        '            <td><input class="slider" id="station1WeightSlider" max="200" min="0" type="range" value="0"></td>' +
         '            <td>' +
-        '              <input class="form-control form-control-sm" id="frontRow" type="text" value="0">' +
+        '              <input class="form-control form-control-sm" id="station1WeightInput" type="text" value="0">' +
         '            </td>' +
         '            <td>2,045</td>' +
         '            <td>368,100</td>' +
@@ -93,18 +94,53 @@ function populateWbTable() {
 
 
 function registerEvents() {
-    $("#frontRow").on("input", change);
-    $("#frontRowSlider").on("input", changeS);
+    $("#station1WeightInput").on("input", station1WeightInputChanged);
+    $("#station1WeightSlider").on("input", station1WeightSliderChanged);
+
+    $("#station2WeightInput").on("input", station2WeightInputChanged);
+    $("#station2WeightSlider").on("input", station2WeightSliderChanged);
+
 }
 
-function change() {
-    frontRow = $("#frontRow").val();
-    $("#frontRowSlider").val(frontRow);
+function station1WeightInputChanged() {
+    station1Weight = $("#station1WeightInput").val();
+    $("#station1WeightSlider").val(station1Weight);
     draw();
 }
 
-function changeS() {
-    frontRow = $("#frontRowSlider").val();
-    $("#frontRow").val(frontRow);
+function station1WeightSliderChanged() {
+    station1Weight = $("#station1WeightSlider").val();
+    $("#station1WeightInput").val(station1Weight);
     draw();
+}
+
+
+function station2WeightInputChanged() {
+    station2Weight = $("#station2WeightInput").val();
+    $("#station2WeightSlider").val(station2Weight);
+    $("#station2Moment").html(formatNumber(station2Weight * 3.627, 3));
+    if (station2Weight > 91) {
+        $("#station2Row").addClass("bg-danger");
+    } else {
+        $("#station2Row").removeClass("bg-danger");
+    }
+    draw();
+}
+
+function station2WeightSliderChanged() {
+    station2Weight = $("#station2WeightSlider").val();
+    $("#station2WeightInput").val(station2Weight);
+    $("#station2Moment").html(formatNumber(station2Weight * 3.627, 3));
+    if (station2Weight > 91) {
+        $("#station2Row").addClass("bg-danger");
+    } else {
+        $("#station2Row").removeClass("bg-danger");
+    }
+    draw();
+}
+
+
+function formatNumber(num, numberOfDigits) {
+    // return (Math.round(num * 100) / 100).toFixed(numberOfDigits);
+    return num.toFixed(numberOfDigits);
 }

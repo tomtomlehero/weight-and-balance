@@ -24,7 +24,7 @@
           "maxWeight": 0
         },
         {
-          "name": "Bagages",
+          "name": "Bagages (max : 91 kg)",
           "weight": 0.0,
           "leverArm": 3.627,
           "maxWeight": 91.0
