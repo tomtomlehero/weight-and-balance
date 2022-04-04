@@ -11,6 +11,7 @@ var wb;
 
 var station2Weight = 0;
 var station3Weight = 0;
+var station4Weight = 0;
 
 function draw() {
     var canvas = document.getElementById("wb");
@@ -93,7 +94,7 @@ function setup() {
         var station = stations[i];
         console.log(station.name);
         $("#station1Name").html(station.name);
-        $("#station1Weight").html(station.weight);
+        $("#station1WeightInput").val(station.weight);
         $("#station1LeverArm").html(format3Digits(station.leverArm));
         $("#station1Moment").html(format3Digits(station.weight * station.leverArm));
     }
@@ -115,6 +116,13 @@ function registerEvents() {
         station3WeightChanged("#station3WeightSlider", "#station3WeightInput");
     });
 
+    $("#station4WeightInput").on("input", function () {
+        station4WeightChanged("#station4WeightInput", "#station4WeightSlider");
+    });
+    $("#station4WeightSlider").on("input", function () {
+        station4WeightChanged("#station4WeightSlider", "#station4WeightInput");
+    });
+
 }
 
 
@@ -134,6 +142,18 @@ function station3WeightChanged(fromComponent, toComponent) {
         $("#station3Row").addClass("bg-danger");
     } else {
         $("#station3Row").removeClass("bg-danger");
+    }
+    draw();
+}
+
+function station4WeightChanged(fromComponent, toComponent) {
+    station4Weight = $(fromComponent).val();
+    $(toComponent).val(station4Weight);
+    $("#station4Moment").html(format3Digits(station4Weight * 3.627));
+    if (station4Weight > 131) {
+        $("#station4Row").addClass("bg-danger");
+    } else {
+        $("#station4Row").removeClass("bg-danger");
     }
     draw();
 }

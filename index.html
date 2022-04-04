@@ -6,7 +6,7 @@
   <title>Weight & Balance</title>
 
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <script src="js/jquery-3.6.0.min.js"></script>
+  <link href="css/wb.css" rel="stylesheet">
 
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/wb.js"></script>
@@ -27,41 +27,52 @@
       <form class="form-inline">
         <table class="table" id="wbTable">
           <thead>
-          <tr>
+          <tr class="text-nowrap">
             <th>Station</th>
             <th></th>
-            <th>Masse (kg)</th>
-            <th>Bras de levier (m)</th>
-            <th>Moment (m.kg)</th>
+            <th>Masse<br/>(kg)</th>
+            <th>Bras de<br/>levier (m)</th>
+            <th>Moment<br/>(m.kg)</th>
           </tr>
           </thead>
           <tbody>
           <tr id="station1Row">
-            <td id="station1Name"></td>
+            <td id="station1Name" class="text-nowrap"></td>
             <td></td>
-            <td id="station1Weight"></td>
-            <td id="station1LeverArm"></td>
-            <td id="station1Moment"></td>
+            <td>
+              <input class="form-control form-control-sm input-right-4" id="station1WeightInput" type="text" value="0" disabled>
+            </td>
+            <td id="station1LeverArm" class="text-end"></td>
+            <td id="station1Moment" class="text-end"></td>
           </tr>
-          <tr id="station2Row">
-            <td>Sièges avant</td>
+          <tr id="station2Name" class="text-nowrap">
+            <td class="text-nowrap">Sièges avant</td>
             <td>
               <input class="slider" id="station2WeightSlider" max="200" min="0" type="range" value="0">
             </td>
             <td>
-              <input class="form-control form-control-sm" id="station2WeightInput" type="text" value="0">
+              <input class="form-control form-control-sm input-right-4" id="station2WeightInput" type="text" value="0">
             </td>
-            <td id="station2LeverArm"></td>
-            <td id="station2Moment"></td>
+            <td id="station2LeverArm" class="text-end"></td>
+            <td id="station2Moment" class="text-end"></td>
           </tr>
           <tr id="station3Row">
-            <td>Bagages (max : 91 kg)</td>
-            <td><input class="slider" id="station3WeightSlider" max="200" min="0" type="range" value="0"></td>
+            <td id="station3Name" class="text-nowrap">Bagages (max : 91 kg)</td>
+            <td><input class="slider" id="station3WeightSlider" max="91" min="0" type="range" value="0"></td>
             <td>
-              <input class="form-control form-control-sm" id="station3WeightInput" type="text" value="0">
+              <input class="form-control form-control-sm input-right-4" id="station3WeightInput" type="text" value="0">
             </td>
-            <td id="station3LeverArm"></td>
-            <td id="station3Moment"></td>
+            <td id="station3LeverArm" class="text-end"></td>
+            <td id="station3Moment" class="text-end"></td>
+          </tr>
+          <tr id="station4Row">
+            <td id="station4Name" class="text-nowrap">Carburant (max : 182 l / 131 kg)</td>
+            <td><input class="slider" id="station4WeightSlider" max="131" min="0" type="range" value="0"></td>
+            <td>
+              <input class="form-control form-control-sm input-right-4" id="station4WeightInput" type="text" value="0">
+            </td>
+            <td id="station4LeverArm" class="text-end"></td>
+            <td id="station4Moment" class="text-end"></td>
           </tr>
           </tbody>
         </table>
