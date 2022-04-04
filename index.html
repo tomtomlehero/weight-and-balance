@@ -25,7 +25,7 @@
   <div class="row">
     <div class="col-sm-6">
       <form class="form-inline">
-        <table id="wbTable" class="table">
+        <table class="table" id="wbTable">
           <thead>
           <tr>
             <th>Station</th>
@@ -42,16 +42,11 @@
             <td id="station1Weight"></td>
             <td id="station1LeverArm"></td>
             <td id="station1Moment"></td>
-<!--            <td class="col-md-3">Masse à vide de base</td>-->
-<!--            <td class="col-md-2"></td>-->
-<!--            <td class="col-md-1">724,0</td>-->
-<!--            <td class="col-md-1">2,230</td>-->
-<!--            <td class="col-md-1">1614,520</td>-->
           </tr>
-          <tr>
+          <tr id="station2Row">
             <td>Sièges avant</td>
             <td>
-              <input class="slider" id="station2WeightSlider" min="0" max="200" type="range" value="0">
+              <input class="slider" id="station2WeightSlider" max="200" min="0" type="range" value="0">
             </td>
             <td>
               <input class="form-control form-control-sm" id="station2WeightInput" type="text" value="0">
@@ -60,8 +55,8 @@
             <td id="station2Moment"></td>
           </tr>
           <tr id="station3Row">
-            <td>Bagages  (max : 91 kg)</td>
-            <td><input class="slider" id="station3WeightSlider" min="0" max="200" type="range" value="0"></td>
+            <td>Bagages (max : 91 kg)</td>
+            <td><input class="slider" id="station3WeightSlider" max="200" min="0" type="range" value="0"></td>
             <td>
               <input class="form-control form-control-sm" id="station3WeightInput" type="text" value="0">
             </td>
