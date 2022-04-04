@@ -1,4 +1,3 @@
-
 // declare graph start and end
 var GRAPH_TOP = 25;
 var GRAPH_BOTTOM = 375;
@@ -10,12 +9,12 @@ var GRAPH_WIDTH = 450;
 
 var wb;
 
-var station1Weight = 0;
 var station2Weight = 0;
+var station3Weight = 0;
 
 function draw() {
-    var canvas = document.getElementById( "wb" );
-    var context = canvas.getContext( "2d");
+    var canvas = document.getElementById("wb");
+    var context = canvas.getContext("2d");
 
 // clear canvas (if another graph was previously drawn)
     context.clearRect(0, 0, 500, 400);
@@ -56,35 +55,30 @@ function draw() {
     context.beginPath();
     context.strokeStyle = "#339";
     context.moveTo(GRAPH_LEFT, GRAPH_TOP);
-    context.lineTo(station1Weight, station1Weight);
+    context.lineTo(station2Weight, station2Weight);
     context.stroke();
 
 }
 
 
 $(document).ready(function () {
-    loadJson();
-    // populateWbTable();
-    registerEvents();
-    draw();
-});
-
-function loadJson() {
-    $.getJSON("json/wb.json", function(data){
+    $.getJSON("json/wb.json", function (data) {
         wb = data;
         console.log(wb);
-    }).fail(function(){
-        console.log("An error has occurred.");
+        // populateWbTable();
+        setup();
+        registerEvents();
+        draw();
     });
-}
+});
 
 function populateWbTable() {
     var row =
         '          <tr class="">' +
         '            <td>Sièges avant</td>' +
-        '            <td><input class="slider" id="station1WeightSlider" max="200" min="0" type="range" value="0"></td>' +
+        '            <td><input class="slider" id="station2WeightSlider" max="200" min="0" type="range" value="0"></td>' +
         '            <td>' +
-        '              <input class="form-control form-control-sm" id="station1WeightInput" type="text" value="0">' +
+        '              <input class="form-control form-control-sm" id="station2WeightInput" type="text" value="0">' +
         '            </td>' +
         '            <td>2,045</td>' +
         '            <td>368,100</td>' +
@@ -92,55 +86,59 @@ function populateWbTable() {
     $("#wbTable tbody").append(row);
 }
 
+function setup() {
+    var aircraft = wb.aircrafts[0];
+    var stations = aircraft.stations;
+    for (var i = 0; i < stations.length; i++) {
+        var station = stations[i];
+        console.log(station.name);
+        $("#station1Name").html(station.name);
+        $("#station1Weight").html(station.weight);
+        $("#station1LeverArm").html(format3Digits(station.leverArm));
+        $("#station1Moment").html(format3Digits(station.weight * station.leverArm));
+    }
+}
+
 
 function registerEvents() {
-    $("#station1WeightInput").on("input", station1WeightInputChanged);
-    $("#station1WeightSlider").on("input", station1WeightSliderChanged);
+    $("#station2WeightInput").on("input", function () {
+        station2WeightChanged("#station2WeightInput", "#station2WeightSlider");
+    });
+    $("#station2WeightSlider").on("input", function () {
+        station2WeightChanged("#station2WeightSlider", "#station2WeightInput");
+    });
 
-    $("#station2WeightInput").on("input", station2WeightInputChanged);
-    $("#station2WeightSlider").on("input", station2WeightSliderChanged);
+    $("#station3WeightInput").on("input", function () {
+        station3WeightChanged("#station3WeightInput", "#station3WeightSlider");
+    });
+    $("#station3WeightSlider").on("input", function () {
+        station3WeightChanged("#station3WeightSlider", "#station3WeightInput");
+    });
 
-}
-
-
-function station1WeightChanged(fromComponent, toComponent) {
-    station1Weight = $(fromComponent).val();
-    $(toComponent).val(station1Weight);
-    draw();
-}
-
-function station1WeightInputChanged() {
-    station1WeightChanged("#station1WeightInput", "#station1WeightSlider")
-}
-
-function station1WeightSliderChanged() {
-    station1WeightChanged("#station1WeightSlider", "#station1WeightInput")
 }
 
 
 function station2WeightChanged(fromComponent, toComponent) {
     station2Weight = $(fromComponent).val();
     $(toComponent).val(station2Weight);
-    $("#station2Moment").html(formatNumber(station2Weight * 3.627, 3));
-    if (station2Weight > 91) {
-        $("#station2Row").addClass("bg-danger");
+    $("#station2Moment").html(format3Digits(station2Weight * 2.045));
+    draw();
+}
+
+
+function station3WeightChanged(fromComponent, toComponent) {
+    station3Weight = $(fromComponent).val();
+    $(toComponent).val(station3Weight);
+    $("#station3Moment").html(format3Digits(station3Weight * 3.627));
+    if (station3Weight > 91) {
+        $("#station3Row").addClass("bg-danger");
     } else {
-        $("#station2Row").removeClass("bg-danger");
+        $("#station3Row").removeClass("bg-danger");
     }
     draw();
 }
 
 
-function station2WeightInputChanged() {
-    station2WeightChanged("#station2WeightInput", "#station2WeightSlider")
-}
-
-function station2WeightSliderChanged() {
-    station2WeightChanged("#station2WeightSlider", "#station2WeightInput")
-}
-
-
-function formatNumber(num, numberOfDigits) {
-    // return (Math.round(num * 100) / 100).toFixed(numberOfDigits);
-    return num.toFixed(numberOfDigits);
+function format3Digits(num) {
+    return num.toFixed(3).replace('.', ',');
 }

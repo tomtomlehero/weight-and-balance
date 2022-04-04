@@ -6,30 +6,35 @@
       "weighingReportDate": "2015-04-23",
       "stations": [
         {
+          "id": 1,
           "name": "Masse à vide",
           "weight": 721.2,
           "leverArm": 2.223,
           "maxWeight": 0
         },
         {
+          "id": 2,
           "name": "Pilote et passager avant",
           "weight": 0.0,
           "leverArm": 2.045,
           "maxWeight": 0
         },
         {
+          "id": 3,
           "name": "Passagers arrière",
           "weight": 0.0,
           "leverArm": 3.000,
           "maxWeight": 0
         },
         {
+          "id": 4,
           "name": "Bagages (max : 91 kg)",
           "weight": 0.0,
           "leverArm": 3.627,
           "maxWeight": 91.0
         },
         {
+          "id": 5,
           "name": "Carburant (max : 182 l / 131 kg)",
           "weight": 131.0,
           "leverArm": 2.413,
