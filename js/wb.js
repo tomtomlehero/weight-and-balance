@@ -102,41 +102,41 @@ function registerEvents() {
 
 }
 
-function station1WeightInputChanged() {
-    station1Weight = $("#station1WeightInput").val();
-    $("#station1WeightSlider").val(station1Weight);
+
+function station1WeightChanged(fromComponent, toComponent) {
+    station1Weight = $(fromComponent).val();
+    $(toComponent).val(station1Weight);
     draw();
 }
 
+function station1WeightInputChanged() {
+    station1WeightChanged("#station1WeightInput", "#station1WeightSlider")
+}
+
 function station1WeightSliderChanged() {
-    station1Weight = $("#station1WeightSlider").val();
-    $("#station1WeightInput").val(station1Weight);
+    station1WeightChanged("#station1WeightSlider", "#station1WeightInput")
+}
+
+
+function station2WeightChanged(fromComponent, toComponent) {
+    station2Weight = $(fromComponent).val();
+    $(toComponent).val(station2Weight);
+    $("#station2Moment").html(formatNumber(station2Weight * 3.627, 3));
+    if (station2Weight > 91) {
+        $("#station2Row").addClass("bg-danger");
+    } else {
+        $("#station2Row").removeClass("bg-danger");
+    }
     draw();
 }
 
 
 function station2WeightInputChanged() {
-    station2Weight = $("#station2WeightInput").val();
-    $("#station2WeightSlider").val(station2Weight);
-    $("#station2Moment").html(formatNumber(station2Weight * 3.627, 3));
-    if (station2Weight > 91) {
-        $("#station2Row").addClass("bg-danger");
-    } else {
-        $("#station2Row").removeClass("bg-danger");
-    }
-    draw();
+    station2WeightChanged("#station2WeightInput", "#station2WeightSlider")
 }
 
 function station2WeightSliderChanged() {
-    station2Weight = $("#station2WeightSlider").val();
-    $("#station2WeightInput").val(station2Weight);
-    $("#station2Moment").html(formatNumber(station2Weight * 3.627, 3));
-    if (station2Weight > 91) {
-        $("#station2Row").addClass("bg-danger");
-    } else {
-        $("#station2Row").removeClass("bg-danger");
-    }
-    draw();
+    station2WeightChanged("#station2WeightSlider", "#station2WeightInput")
 }
 
 
