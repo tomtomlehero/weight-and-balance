@@ -10,6 +10,9 @@ var GRAPH_WIDTH = 450;
 var wb;
 var someValue = 0;
 
+let stationZeroFuelMassId = "ZFM";
+
+
 function draw() {
     var canvas = document.getElementById("wb");
     var context = canvas.getContext("2d");
@@ -70,11 +73,30 @@ $(document).ready(function () {
 });
 
 function buildWbTable() {
+    let tableBody = $("#wbTable tbody");
     var aircraft = wb.aircrafts[0];
     var stations = aircraft.stations;
-    for (var i = 0; i < stations.length; i++) {
-        $("#wbTable tbody").append(wbRow(stations[i]));
+    for (var i = 0; i < stations.length - 1; i++) {
+        tableBody.append(wbRow(stations[i]));
     }
+    tableBody.append(wbZeroFuelRow());
+    tableBody.append(wbRow(stations[stations.length - 1]));
+}
+
+function stationZeroFuelMass() {
+    return {
+        id: stationZeroFuelMassId,
+        name: wb.stationZeroFuelMassName,
+        editable: false,
+        weight: 0.0,
+        leverArm: 0.0,
+        maxWeight: 0,
+        warningIfMaxWeightExceeded : false
+    };
+}
+
+function wbZeroFuelRow() {
+    return uneditableWbRow(stationZeroFuelMass());
 }
 
 function wbRow(station) {
@@ -122,17 +144,22 @@ function setup() {
     for (var i = 0; i < stations.length; i++) {
         setupRow(stations[i]);
     }
+    setupRow(stationZeroFuelMass());
+    zeroFuelMassChanged();
 }
 
 function setupRow(station) {
     $(`#station${station.id}Name`).html(station.name);
     $(`#station${station.id}WeightInput`).val(station.weight);
-    $(`#station${station.id}LeverArm`).html(format3Digits(station.leverArm));
-    $(`#station${station.id}Moment`).html(format3Digits(station.weight * station.leverArm));
+    $(`#station${station.id}LeverArm`).html(format3Digit(station.leverArm));
+    $(`#station${station.id}Moment`).html(format3Digit(station.weight * station.leverArm));
     if (station.editable) {
         $(`#station${station.id}WeightSlider`).val(station.weight);
     }
 }
+
+
+
 
 function registerEvents() {
     var aircraft = wb.aircrafts[0];
@@ -156,7 +183,7 @@ function registerEvent(station) {
 function stationWeightChanged(station, fromComponent, toComponent) {
     let weight = $(fromComponent).val();
     $(toComponent).val(weight);
-    $(`#station${station.id}Moment`).html(format3Digits(weight * station.leverArm));
+    $(`#station${station.id}Moment`).html(format3Digit(weight * station.leverArm));
     if (station.warningIfMaxWeightExceeded) {
         if (weight > station.maxWeight) {
             $(`#station${station.id}Row`).addClass("bg-danger");
@@ -164,11 +191,44 @@ function stationWeightChanged(station, fromComponent, toComponent) {
             $(`#station${station.id}Row`).removeClass("bg-danger");
         }
     }
+
+    zeroFuelMassChanged();
     someValue = weight;
     draw();
 }
 
 
-function format3Digits(num) {
+function zeroFuelMassChanged() {
+    let stationZeroFuelWeight = 0;
+    let stationZeroFuelMoment = 0;
+    var aircraft = wb.aircrafts[0];
+    var stations = aircraft.stations;
+    for (var i = 0; i < stations.length - 1; i++) {
+        stationZeroFuelWeight += stationWeight(stations[i]);
+        stationZeroFuelMoment += stationMoment(stations[i]);
+    }
+    $(`#station${stationZeroFuelMassId}WeightInput`).val(format0Digit(stationZeroFuelWeight));
+    $(`#station${stationZeroFuelMassId}Moment`).html(format3Digit(stationZeroFuelMoment));
+    $(`#station${stationZeroFuelMassId}LeverArm`).html(format3Digit(stationZeroFuelMoment / stationZeroFuelWeight));
+}
+
+
+
+function stationMoment(station) {
+    let weight = parseFloat($(`#station${station.id}WeightInput`).val());
+    return weight * station.leverArm;
+}
+
+function stationWeight(station) {
+    return weight = parseFloat($(`#station${station.id}WeightInput`).val());
+}
+
+
+
+function format3Digit(num) {
     return num.toFixed(3).replace('.', ',');
+}
+
+function format0Digit(num) {
+    return num.toFixed(0);
 }

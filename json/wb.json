@@ -1,4 +1,7 @@
 {
+  "stationZeroFuelMassName": "Masse sans carburant",
+  "stationStartFuelMassName": "Forfait roulage et essais moteur",
+  "stationTakeoffMassName": "Masse décollage",
   "aircrafts": [
     {
       "name": "PA28",
