@@ -8,10 +8,7 @@ var GRAPH_HEIGHT = 350;
 var GRAPH_WIDTH = 450;
 
 var wb;
-
-var station2Weight = 0;
-var station3Weight = 0;
-var station4Weight = 0;
+var someValue = 0;
 
 function draw() {
     var canvas = document.getElementById("wb");
@@ -56,7 +53,7 @@ function draw() {
     context.beginPath();
     context.strokeStyle = "#339";
     context.moveTo(GRAPH_LEFT, GRAPH_TOP);
-    context.lineTo(station2Weight, station2Weight);
+    context.lineTo(someValue, someValue);
     context.stroke();
 
 }
@@ -65,96 +62,109 @@ function draw() {
 $(document).ready(function () {
     $.getJSON("json/wb.json", function (data) {
         wb = data;
-        console.log(wb);
-        // populateWbTable();
+        buildWbTable();
         setup();
         registerEvents();
         draw();
     });
 });
 
-function populateWbTable() {
-    var row =
-        '          <tr class="">' +
-        '            <td>Sièges avant</td>' +
-        '            <td><input class="slider" id="station2WeightSlider" max="200" min="0" type="range" value="0"></td>' +
-        '            <td>' +
-        '              <input class="form-control form-control-sm" id="station2WeightInput" type="text" value="0">' +
-        '            </td>' +
-        '            <td>2,045</td>' +
-        '            <td>368,100</td>' +
-        '          </tr>';
-    $("#wbTable tbody").append(row);
+function buildWbTable() {
+    var aircraft = wb.aircrafts[0];
+    var stations = aircraft.stations;
+    for (var i = 0; i < stations.length; i++) {
+        $("#wbTable tbody").append(wbRow(stations[i]));
+    }
 }
+
+function wbRow(station) {
+    if (station.editable) {
+        return editableWbRow(station);
+    } else {
+        return uneditableWbRow(station);
+    }
+}
+
+function editableWbRow(station) {
+    return `
+          <tr id="station${station.id}Row">
+            <td class="text-nowrap" id="station${station.id}Name"></td>
+            <td>
+              <input class="slider" id="station${station.id}WeightSlider" max="${station.maxWeight}" min="0" type="range" value="0">
+            </td>
+            <td>
+              <input class="form-control form-control-sm input-right-4" id="station${station.id}WeightInput" type="text" value="0">
+            </td>
+            <td class="text-end" id="station${station.id}LeverArm"></td>
+            <td class="text-end" id="station${station.id}Moment"></td>
+          </tr>
+`;
+}
+
+function uneditableWbRow(station) {
+    return `
+          <tr id="station${station.id}Row">
+            <td class="text-nowrap" id="station${station.id}Name"></td>
+            <td></td>
+            <td>
+              <input class="form-control form-control-sm input-right-4" disabled id="station${station.id}WeightInput" type="text" value="0">
+            </td>
+            <td class="text-end" id="station${station.id}LeverArm"></td>
+            <td class="text-end" id="station${station.id}Moment"></td>
+          </tr>
+`;
+}
+
 
 function setup() {
     var aircraft = wb.aircrafts[0];
     var stations = aircraft.stations;
     for (var i = 0; i < stations.length; i++) {
-        var station = stations[i];
-        console.log(station.name);
-        $("#station1Name").html(station.name);
-        $("#station1WeightInput").val(station.weight);
-        $("#station1LeverArm").html(format3Digits(station.leverArm));
-        $("#station1Moment").html(format3Digits(station.weight * station.leverArm));
+        setupRow(stations[i]);
     }
 }
 
+function setupRow(station) {
+    $(`#station${station.id}Name`).html(station.name);
+    $(`#station${station.id}WeightInput`).val(station.weight);
+    $(`#station${station.id}LeverArm`).html(format3Digits(station.leverArm));
+    $(`#station${station.id}Moment`).html(format3Digits(station.weight * station.leverArm));
+    if (station.editable) {
+        $(`#station${station.id}WeightSlider`).val(station.weight);
+    }
+}
 
 function registerEvents() {
-    $("#station2WeightInput").on("input", function () {
-        station2WeightChanged("#station2WeightInput", "#station2WeightSlider");
-    });
-    $("#station2WeightSlider").on("input", function () {
-        station2WeightChanged("#station2WeightSlider", "#station2WeightInput");
-    });
-
-    $("#station3WeightInput").on("input", function () {
-        station3WeightChanged("#station3WeightInput", "#station3WeightSlider");
-    });
-    $("#station3WeightSlider").on("input", function () {
-        station3WeightChanged("#station3WeightSlider", "#station3WeightInput");
-    });
-
-    $("#station4WeightInput").on("input", function () {
-        station4WeightChanged("#station4WeightInput", "#station4WeightSlider");
-    });
-    $("#station4WeightSlider").on("input", function () {
-        station4WeightChanged("#station4WeightSlider", "#station4WeightInput");
-    });
-
-}
-
-
-function station2WeightChanged(fromComponent, toComponent) {
-    station2Weight = $(fromComponent).val();
-    $(toComponent).val(station2Weight);
-    $("#station2Moment").html(format3Digits(station2Weight * 2.045));
-    draw();
-}
-
-
-function station3WeightChanged(fromComponent, toComponent) {
-    station3Weight = $(fromComponent).val();
-    $(toComponent).val(station3Weight);
-    $("#station3Moment").html(format3Digits(station3Weight * 3.627));
-    if (station3Weight > 91) {
-        $("#station3Row").addClass("bg-danger");
-    } else {
-        $("#station3Row").removeClass("bg-danger");
+    var aircraft = wb.aircrafts[0];
+    var stations = aircraft.stations;
+    for (var i = 0; i < stations.length; i++) {
+        registerEvent(stations[i]);
     }
-    draw();
 }
 
-function station4WeightChanged(fromComponent, toComponent) {
-    station4Weight = $(fromComponent).val();
-    $(toComponent).val(station4Weight);
-    $("#station4Moment").html(format3Digits(station4Weight * 3.627));
-    if (station4Weight > 131) {
-        $("#station4Row").addClass("bg-danger");
-    } else {
-        $("#station4Row").removeClass("bg-danger");
+function registerEvent(station) {
+    if (station.editable) {
+        $(`#station${station.id}WeightInput`).on("input", function () {
+            stationWeightChanged(station,`#station${station.id}WeightInput`, `#station${station.id}WeightSlider`);
+        });
+        $(`#station${station.id}WeightSlider`).on("input", function () {
+            stationWeightChanged(station,`#station${station.id}WeightSlider`, `#station${station.id}WeightInput`);
+        });
     }
+}
+
+function stationWeightChanged(station, fromComponent, toComponent) {
+    let weight = $(fromComponent).val();
+    $(toComponent).val(weight);
+    $(`#station${station.id}Moment`).html(format3Digits(weight * station.leverArm));
+    if (station.warningIfMaxWeightExceeded) {
+        if (weight > station.maxWeight) {
+            $(`#station${station.id}Row`).addClass("bg-danger");
+        } else {
+            $(`#station${station.id}Row`).removeClass("bg-danger");
+        }
+    }
+    someValue = weight;
     draw();
 }
 
