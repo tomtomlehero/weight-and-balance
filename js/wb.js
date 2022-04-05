@@ -1,21 +1,21 @@
 // declare graph start and end
-var GRAPH_TOP = 25;
-var GRAPH_BOTTOM = 375;
-var GRAPH_LEFT = 25;
-var GRAPH_RIGHT = 475;
+const GRAPH_TOP = 25;
+const GRAPH_BOTTOM = 375;
+const GRAPH_LEFT = 25;
+const GRAPH_RIGHT = 475;
 
-var GRAPH_HEIGHT = 350;
-var GRAPH_WIDTH = 450;
+const GRAPH_HEIGHT = 350;
+const GRAPH_WIDTH = 450;
 
-var wb;
-var someValue = 0;
+let wb;
+let someValue = 0;
 
-let stationZeroFuelMassId = "ZFM";
+const stationZeroFuelMassId = "ZFM";
 
 
 function draw() {
-    var canvas = document.getElementById("wb");
-    var context = canvas.getContext("2d");
+    const canvas = document.getElementById("wb");
+    const context = canvas.getContext("2d");
 
 // clear canvas (if another graph was previously drawn)
     context.clearRect(0, 0, 500, 400);
@@ -74,9 +74,9 @@ $(document).ready(function () {
 
 function buildWbTable() {
     let tableBody = $("#wbTable tbody");
-    var aircraft = wb.aircrafts[0];
-    var stations = aircraft.stations;
-    for (var i = 0; i < stations.length - 1; i++) {
+    const aircraft = wb.aircrafts[0];
+    const stations = aircraft.stations;
+    for (let i = 0; i < stations.length - 1; i++) {
         tableBody.append(wbRow(stations[i]));
     }
     tableBody.append(wbZeroFuelRow());
@@ -139,9 +139,9 @@ function uneditableWbRow(station) {
 
 
 function setup() {
-    var aircraft = wb.aircrafts[0];
-    var stations = aircraft.stations;
-    for (var i = 0; i < stations.length; i++) {
+    const aircraft = wb.aircrafts[0];
+    const stations = aircraft.stations;
+    for (let i = 0; i < stations.length; i++) {
         setupRow(stations[i]);
     }
     setupRow(stationZeroFuelMass());
@@ -162,9 +162,9 @@ function setupRow(station) {
 
 
 function registerEvents() {
-    var aircraft = wb.aircrafts[0];
-    var stations = aircraft.stations;
-    for (var i = 0; i < stations.length; i++) {
+    const aircraft = wb.aircrafts[0];
+    const stations = aircraft.stations;
+    for (let i = 0; i < stations.length; i++) {
         registerEvent(stations[i]);
     }
 }
@@ -201,9 +201,9 @@ function stationWeightChanged(station, fromComponent, toComponent) {
 function zeroFuelMassChanged() {
     let stationZeroFuelWeight = 0;
     let stationZeroFuelMoment = 0;
-    var aircraft = wb.aircrafts[0];
-    var stations = aircraft.stations;
-    for (var i = 0; i < stations.length - 1; i++) {
+    const aircraft = wb.aircrafts[0];
+    const stations = aircraft.stations;
+    for (let i = 0; i < stations.length - 1; i++) {
         stationZeroFuelWeight += stationWeight(stations[i]);
         stationZeroFuelMoment += stationMoment(stations[i]);
     }
@@ -220,7 +220,7 @@ function stationMoment(station) {
 }
 
 function stationWeight(station) {
-    return weight = parseFloat($(`#station${station.id}WeightInput`).val());
+    return parseFloat($(`#station${station.id}WeightInput`).val());
 }
 
 
