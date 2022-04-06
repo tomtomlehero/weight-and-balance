@@ -142,33 +142,26 @@ function registerEvent(station) {
 
 function stationWeightChanged(station, fromComponent, toComponent) {
     let weight = $(fromComponent).val();
-
-
-    if (isNaN(weight)) {
-        $(`#station${station.id}Row`).addClass("bg-warning");
-        station.nan = true;
-        $(`#station${station.id}Moment`).html("");
-        return;
-    } else {
-        station.nan = false;
-        $(`#station${station.id}Row`).removeClass("bg-warning");
+    handleNaN(station, weight);
+    if (!station.nan) {
+        $(toComponent).val(weight);
+        $(`#station${station.id}Moment`).html(format3Digit(weight * station.leverArm));
     }
-
-    $(toComponent).val(weight);
-    $(`#station${station.id}Moment`).html(format3Digit(weight * station.leverArm));
-
     handleMassExceeded(station, weight);
-
     someValue = weight;
     anythingChanged();
 }
 
 function zeroFuelMassChanged() {
 
+    const zeroFuelMassWeightInput = $(`#station${stationZeroFuelMassId}WeightInput`);
+    const zeroFuelMassMoment = $(`#station${stationZeroFuelMassId}Moment`);
+    const zeroFuelMassLeverArm = $(`#station${stationZeroFuelMassId}LeverArm`);
+
     if (isInWarning()) {
-        $(`#station${stationZeroFuelMassId}WeightInput`).val("");
-        $(`#station${stationZeroFuelMassId}Moment`).html("");
-        $(`#station${stationZeroFuelMassId}LeverArm`).html("");
+        zeroFuelMassWeightInput.val("");
+        zeroFuelMassMoment.html("");
+        zeroFuelMassLeverArm.html("");
         return;
     }
 
@@ -179,15 +172,26 @@ function zeroFuelMassChanged() {
         stationZeroFuelWeight += stationWeight(stations[i]);
         stationZeroFuelMoment += stationMoment(stations[i]);
     }
-    $(`#station${stationZeroFuelMassId}WeightInput`).val(format0Digit(stationZeroFuelWeight));
-    $(`#station${stationZeroFuelMassId}Moment`).html(format3Digit(stationZeroFuelMoment));
-    $(`#station${stationZeroFuelMassId}LeverArm`).html(format3Digit(stationZeroFuelMoment / stationZeroFuelWeight));
+    zeroFuelMassWeightInput.val(format0Digit(stationZeroFuelWeight));
+    zeroFuelMassMoment.html(format3Digit(stationZeroFuelMoment));
+    zeroFuelMassLeverArm.html(format3Digit(stationZeroFuelMoment / stationZeroFuelWeight));
 }
 
 
 function anythingChanged() {
     zeroFuelMassChanged();
     draw();
+}
+
+function handleNaN(station, weight) {
+    if (isNaN(weight)) {
+        $(`#station${station.id}Row`).addClass("bg-warning");
+        station.nan = true;
+        $(`#station${station.id}Moment`).html("");
+    } else {
+        station.nan = false;
+        $(`#station${station.id}Row`).removeClass("bg-warning");
+    }
 }
 
 function handleMassExceeded(station, weight) {
@@ -199,6 +203,7 @@ function handleMassExceeded(station, weight) {
         }
     }
 }
+
 
 /**************************************************************************************************************/
 
@@ -237,6 +242,7 @@ function format0Digit(num) {
 function draw() {
 
     if (isInWarning()) {
+        // Don't draw anything here !
         return;
     }
 
