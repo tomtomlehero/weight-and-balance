@@ -70,18 +70,18 @@ function buildWbTable() {
 
 
 function wbZeroFuelRow() {
-    return uneditableWbRow(stationZeroFuelMass);
+    return uneditableWbRow(stationZeroFuelMass, true);
 }
 
 function wbTakeoffRow() {
-    return uneditableWbRow(stationTakeoffMass);
+    return uneditableWbRow(stationTakeoffMass, true);
 }
 
 function wbRow(station) {
     if (station.editable) {
         return editableWbRow(station);
     } else {
-        return uneditableWbRow(station);
+        return uneditableWbRow(station, false);
     }
 }
 
@@ -101,9 +101,13 @@ function editableWbRow(station) {
 `;
 }
 
-function uneditableWbRow(station) {
+function uneditableWbRow(station, highlight) {
+    let highlightClass = "";
+    if (highlight) {
+        highlightClass = "bg-light";
+    }
     return `
-          <tr id="station${station.id}Row">
+          <tr id="station${station.id}Row" class="${highlightClass}">
             <td class="text-nowrap" id="station${station.id}Name"></td>
             <td></td>
             <td>
