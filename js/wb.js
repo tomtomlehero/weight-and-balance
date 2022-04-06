@@ -142,22 +142,36 @@ function registerEvent(station) {
 
 function stationWeightChanged(station, fromComponent, toComponent) {
     let weight = $(fromComponent).val();
-    $(toComponent).val(weight);
-    $(`#station${station.id}Moment`).html(format3Digit(weight * station.leverArm));
-    if (station.warningIfMaxWeightExceeded) {
-        if (weight > station.maxWeight) {
-            $(`#station${station.id}Row`).addClass("bg-danger");
-        } else {
-            $(`#station${station.id}Row`).removeClass("bg-danger");
-        }
+
+
+    if (isNaN(weight)) {
+        $(`#station${station.id}Row`).addClass("bg-warning");
+        station.nan = true;
+        $(`#station${station.id}Moment`).html("");
+        return;
+    } else {
+        station.nan = false;
+        $(`#station${station.id}Row`).removeClass("bg-warning");
     }
 
-    someValue = weight;
+    $(toComponent).val(weight);
+    $(`#station${station.id}Moment`).html(format3Digit(weight * station.leverArm));
 
+    handleMassExceeded(station, weight);
+
+    someValue = weight;
     anythingChanged();
 }
 
 function zeroFuelMassChanged() {
+
+    if (isInWarning()) {
+        $(`#station${stationZeroFuelMassId}WeightInput`).val("");
+        $(`#station${stationZeroFuelMassId}Moment`).html("");
+        $(`#station${stationZeroFuelMassId}LeverArm`).html("");
+        return;
+    }
+
     let stationZeroFuelWeight = 0;
     let stationZeroFuelMoment = 0;
     const stations = wb.aircrafts[0].stations;
@@ -176,10 +190,30 @@ function anythingChanged() {
     draw();
 }
 
+function handleMassExceeded(station, weight) {
+    if (station.warningIfMaxWeightExceeded) {
+        if (weight > station.maxWeight) {
+            $(`#station${station.id}Row`).addClass("bg-danger");
+        } else {
+            $(`#station${station.id}Row`).removeClass("bg-danger");
+        }
+    }
+}
 
 /**************************************************************************************************************/
 
-function stationMoment(station) {
+function isInWarning() {
+
+    let stations = wb.aircrafts[0].stations;
+    for (let i = 0; i < stations.length; i++) {
+        if (!(typeof stations[i].nan === 'undefined') && stations[i].nan) {
+            return true;
+        }
+    }
+    return false;
+}
+
+    function stationMoment(station) {
     let weight = parseFloat($(`#station${station.id}WeightInput`).val());
     return weight * station.leverArm;
 }
@@ -201,6 +235,11 @@ function format0Digit(num) {
 
 
 function draw() {
+
+    if (isInWarning()) {
+        return;
+    }
+
     const canvas = document.getElementById("wb");
     const context = canvas.getContext("2d");
 
