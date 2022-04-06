@@ -3,7 +3,9 @@ let wb;
 let someValue = 0;
 
 const stationZeroFuelMassId = "ZFM";
+const stationTakeoffMassId = "TOM";
 let stationZeroFuelMass;
+let stationTakeoffMass;
 
 
 const GRAPH_TOP = 25;
@@ -40,6 +42,16 @@ function init(data) {
         maxWeight: 0,
         warningIfMaxWeightExceeded : false
     };
+
+    stationTakeoffMass = {
+        id: stationTakeoffMassId,
+        name: `${wb.stationTakeoffMassName} (max : ${wb.aircrafts[0].maxTakeoffWeight} kg)`,
+        editable: false,
+        weight: 0.0,
+        leverArm: 0.0,
+        maxWeight: 0,
+        warningIfMaxWeightExceeded : false
+    };
 }
 
 
@@ -53,11 +65,16 @@ function buildWbTable() {
     }
     tableBody.append(wbZeroFuelRow());
     tableBody.append(wbRow(stations[stations.length - 1]));
+    tableBody.append(wbTakeoffRow());
 }
 
 
 function wbZeroFuelRow() {
     return uneditableWbRow(stationZeroFuelMass);
+}
+
+function wbTakeoffRow() {
+    return uneditableWbRow(stationTakeoffMass);
 }
 
 function wbRow(station) {
@@ -107,6 +124,7 @@ function fillWbTable() {
         fillRow(stations[i]);
     }
     fillRow(stationZeroFuelMass);
+    fillRow(stationTakeoffMass);
 }
 
 function fillRow(station) {
@@ -177,14 +195,46 @@ function zeroFuelMassChanged() {
     zeroFuelMassLeverArm.html(format3Digit(stationZeroFuelMoment / stationZeroFuelWeight));
 }
 
+function takeoffMassChanged() {
+
+    const takeoffMassWeightInput = $(`#station${stationTakeoffMassId}WeightInput`);
+    const takeoffMassMoment = $(`#station${stationTakeoffMassId}Moment`);
+    const takeoffMassLeverArm = $(`#station${stationTakeoffMassId}LeverArm`);
+
+    if (isInWarning()) {
+        takeoffMassWeightInput.val("");
+        takeoffMassMoment.html("");
+        takeoffMassLeverArm.html("");
+        $(`#station${stationTakeoffMassId}Row`).removeClass("bg-danger");
+        return;
+    }
+
+    let stationTakeoffWeight = 0;
+    let stationTakeoffMoment = 0;
+    const stations = wb.aircrafts[0].stations;
+    for (let i = 0; i < stations.length; i++) {
+        stationTakeoffWeight += stationWeight(stations[i]);
+        stationTakeoffMoment += stationMoment(stations[i]);
+    }
+    takeoffMassWeightInput.val(format0Digit(stationTakeoffWeight));
+    takeoffMassMoment.html(format3Digit(stationTakeoffMoment));
+    takeoffMassLeverArm.html(format3Digit(stationTakeoffMoment / stationTakeoffWeight));
+
+    if (stationTakeoffWeight > wb.aircrafts[0].maxTakeoffWeight) {
+        $(`#station${stationTakeoffMassId}Row`).addClass("bg-danger");
+    } else {
+        $(`#station${stationTakeoffMassId}Row`).removeClass("bg-danger");
+    }
+}
 
 function anythingChanged() {
     zeroFuelMassChanged();
+    takeoffMassChanged();
     draw();
 }
 
 function handleNaN(station, weight) {
-    if (isNaN(weight)) {
+    if (isNaN(weight) || weight.trim() === '') {
         $(`#station${station.id}Row`).addClass("bg-warning");
         station.nan = true;
         $(`#station${station.id}Moment`).html("");

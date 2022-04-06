@@ -7,6 +7,7 @@
       "name": "PA28",
       "callSign": "F-GFZA",
       "weighingReportDate": "2015-04-23",
+      "maxTakeoffWeight": 1157,
       "stations": [
         {
           "id": 1,
