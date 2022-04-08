@@ -4,6 +4,50 @@
   "stationTakeoffMassName": "Masse décollage",
   "aircrafts": [
     {
+      "name": "Aquila",
+      "callSign": "F-GXCF",
+      "weighingReportDate": "24/03/2021",
+      "maxTakeoffWeight": 750,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 515.0,
+          "leverArm": 0.434,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded" : false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 0.515,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded" : false
+        },
+        {
+          "id": 3,
+          "name": "Bagages (max : 40 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 1.300,
+          "maxWeight": 40.0,
+          "warningIfMaxWeightExceeded" : true
+        },
+        {
+          "id": 4,
+          "name": "Carburant (max : 79 kg / 110 l)",
+          "editable": true,
+          "weight": 79.0,
+          "leverArm": 0.325,
+          "maxWeight": 79.0,
+          "warningIfMaxWeightExceeded" : true
+        }
+      ]
+    },
+    {
       "name": "PA28",
       "callSign": "F-GFZA",
       "weighingReportDate": "2015-04-23",

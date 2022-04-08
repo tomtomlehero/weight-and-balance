@@ -1,5 +1,7 @@
 
 let wb;
+let selectedAircraft;
+
 let someValue = 0;
 
 const stationZeroFuelMassId = "ZFM";
@@ -55,10 +57,11 @@ function init(data) {
 
 
 function registerTabEvents() {
-    for (let i = 0; i < 9; i++) {
-        $(`#nav-${i}-tab`).click(function () {
+    for (let aircraftId = 0; aircraftId < 9; aircraftId++) {
+        $(`#nav-${aircraftId}-tab`).click(function () {
+            selectedAircraft = wb.aircrafts[aircraftId];
             $("#nav-tabContent").html(innerTabHtml);
-            loadAircraft(i);
+            loadAircraft();
             buildWbTable();
             fillWbTable();
             registerEvents();
@@ -67,7 +70,7 @@ function registerTabEvents() {
     }
 }
 
-function loadAircraft(i) {
+function loadAircraft() {
     stationZeroFuelMass = {
         id: stationZeroFuelMassId,
         name: wb.stationZeroFuelMassName,
@@ -80,7 +83,7 @@ function loadAircraft(i) {
 
     stationTakeoffMass = {
         id: stationTakeoffMassId,
-        name: `${wb.stationTakeoffMassName} (max : ${wb.aircrafts[i].maxTakeoffWeight} kg)`,
+        name: `${wb.stationTakeoffMassName} (max : ${selectedAircraft.maxTakeoffWeight} kg)`,
         editable: false,
         weight: 0.0,
         leverArm: 0.0,
@@ -93,7 +96,7 @@ function loadAircraft(i) {
 
 function buildWbTable() {
     const tableBody = $("#wbTable tbody");
-    const stations = wb.aircrafts[0].stations;
+    const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length - 1; i++) {
         tableBody.append(wbRow(stations[i]));
     }
@@ -153,7 +156,7 @@ function uneditableWbRow(station) {
 /**************************************************************************************************************/
 
 function fillWbTable() {
-    const stations = wb.aircrafts[0].stations;
+    const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length; i++) {
         fillRow(stations[i]);
     }
@@ -175,7 +178,7 @@ function fillRow(station) {
 /**************************************************************************************************************/
 
 function registerEvents() {
-    const stations = wb.aircrafts[0].stations;
+    const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length; i++) {
         registerEvent(stations[i]);
     }
@@ -219,7 +222,7 @@ function zeroFuelMassChanged() {
 
     let stationZeroFuelWeight = 0;
     let stationZeroFuelMoment = 0;
-    const stations = wb.aircrafts[0].stations;
+    const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length - 1; i++) {
         stationZeroFuelWeight += stationWeight(stations[i]);
         stationZeroFuelMoment += stationMoment(stations[i]);
@@ -245,7 +248,7 @@ function takeoffMassChanged() {
 
     let stationTakeoffWeight = 0;
     let stationTakeoffMoment = 0;
-    const stations = wb.aircrafts[0].stations;
+    const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length; i++) {
         stationTakeoffWeight += stationWeight(stations[i]);
         stationTakeoffMoment += stationMoment(stations[i]);
@@ -254,7 +257,7 @@ function takeoffMassChanged() {
     takeoffMassMoment.html(format3Digit(stationTakeoffMoment));
     takeoffMassLeverArm.html(format3Digit(stationTakeoffMoment / stationTakeoffWeight));
 
-    if (stationTakeoffWeight > wb.aircrafts[0].maxTakeoffWeight) {
+    if (stationTakeoffWeight > selectedAircraft.maxTakeoffWeight) {
         $(`#station${stationTakeoffMassId}Row`).addClass("bg-danger");
     } else {
         $(`#station${stationTakeoffMassId}Row`).removeClass("bg-danger");
@@ -293,7 +296,7 @@ function handleMassExceeded(station, weight) {
 
 function isInWarning() {
 
-    let stations = wb.aircrafts[0].stations;
+    let stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length; i++) {
         if (!(typeof stations[i].nan === 'undefined') && stations[i].nan) {
             return true;
