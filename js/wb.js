@@ -47,6 +47,7 @@ const innerTabHtml = `
 $(document).ready(function () {
     $.getJSON("json/wb.json", function (data) {
         init(data);
+        buildNavTabs();
         registerTabEvents();
     });
 });
@@ -55,9 +56,15 @@ function init(data) {
     wb = data;
 }
 
+function buildNavTabs() {
+    for (let aircraftId = 0; aircraftId < wb.aircrafts.length; aircraftId++) {
+        $("#nav-tab").append(`<button class="nav-link" id="nav-${aircraftId}-tab" data-bs-toggle="tab">${wb.aircrafts[aircraftId].callSign}</button>`)
+    }
+}
+
 
 function registerTabEvents() {
-    for (let aircraftId = 0; aircraftId < 9; aircraftId++) {
+    for (let aircraftId = 0; aircraftId < wb.aircrafts.length; aircraftId++) {
         $(`#nav-${aircraftId}-tab`).click(function () {
             selectedAircraft = wb.aircrafts[aircraftId];
             $("#nav-tabContent").html(innerTabHtml);
