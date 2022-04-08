@@ -4,7 +4,7 @@
   "stationTakeoffMassName": "Masse décollage",
   "aircrafts": [
     {
-      "name": "Aquila",
+      "type": "Aquila",
       "callSign": "F-GXCF",
       "weighingReportDate": "24/03/2021",
       "maxTakeoffWeight": 750,
@@ -16,7 +16,7 @@
           "weight": 515.0,
           "leverArm": 0.434,
           "maxWeight": 0,
-          "warningIfMaxWeightExceeded" : false
+          "warningIfMaxWeightExceeded": false
         },
         {
           "id": 2,
@@ -25,7 +25,7 @@
           "weight": 0.0,
           "leverArm": 0.515,
           "maxWeight": 200,
-          "warningIfMaxWeightExceeded" : false
+          "warningIfMaxWeightExceeded": false
         },
         {
           "id": 3,
@@ -34,7 +34,7 @@
           "weight": 0.0,
           "leverArm": 1.300,
           "maxWeight": 40.0,
-          "warningIfMaxWeightExceeded" : true
+          "warningIfMaxWeightExceeded": true
         },
         {
           "id": 4,
@@ -43,14 +43,102 @@
           "weight": 79.0,
           "leverArm": 0.325,
           "maxWeight": 79.0,
-          "warningIfMaxWeightExceeded" : true
+          "warningIfMaxWeightExceeded": true
         }
       ]
     },
     {
-      "name": "PA28",
+      "type": "Aquila",
+      "callSign": "F-GXMV",
+      "weighingReportDate": "22/09/2021",
+      "maxTakeoffWeight": 750,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 509.0,
+          "leverArm": 0.436,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 0.515,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Bagages (max : 40 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 1.300,
+          "maxWeight": 40.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 4,
+          "name": "Carburant (max : 79 kg / 110 l)",
+          "editable": true,
+          "weight": 79.0,
+          "leverArm": 0.325,
+          "maxWeight": 79.0,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
+      "type": "Aquila",
+      "callSign": "F-HAAT",
+      "weighingReportDate": "22/09/2020",
+      "maxTakeoffWeight": 750,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 511.0,
+          "leverArm": 0.429,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 0.515,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Bagages (max : 40 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 1.300,
+          "maxWeight": 40.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 4,
+          "name": "Carburant (max : 79 kg / 110 l)",
+          "editable": true,
+          "weight": 79.0,
+          "leverArm": 0.325,
+          "maxWeight": 79.0,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
+      "type": "PA28",
       "callSign": "F-GFZA",
-      "weighingReportDate": "2015-04-23",
+      "weighingReportDate": "23/04/2015",
       "maxTakeoffWeight": 1157,
       "stations": [
         {
@@ -60,7 +148,7 @@
           "weight": 724.0,
           "leverArm": 2.230,
           "maxWeight": 0,
-          "warningIfMaxWeightExceeded" : false
+          "warningIfMaxWeightExceeded": false
         },
         {
           "id": 2,
@@ -69,7 +157,7 @@
           "weight": 0.0,
           "leverArm": 2.045,
           "maxWeight": 200,
-          "warningIfMaxWeightExceeded" : false
+          "warningIfMaxWeightExceeded": false
         },
         {
           "id": 3,
@@ -78,7 +166,7 @@
           "weight": 0.0,
           "leverArm": 3.000,
           "maxWeight": 200,
-          "warningIfMaxWeightExceeded" : false
+          "warningIfMaxWeightExceeded": false
         },
         {
           "id": 4,
@@ -87,7 +175,7 @@
           "weight": 0.0,
           "leverArm": 3.627,
           "maxWeight": 91.0,
-          "warningIfMaxWeightExceeded" : true
+          "warningIfMaxWeightExceeded": true
         },
         {
           "id": 5,
@@ -96,9 +184,134 @@
           "weight": 131.0,
           "leverArm": 2.413,
           "maxWeight": 131.0,
-          "warningIfMaxWeightExceeded" : true
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
+      "type": "DA40",
+      "callSign": "F-HLTP",
+      "weighingReportDate": "21/03/2012",
+      "maxTakeoffWeight": 1200,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 797.0,
+          "leverArm": 2.502,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager avant",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 2.300,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Passagers arrière",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.250,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 4,
+          "name": "Bagages - Std Comp. (max : 30 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.650,
+          "maxWeight": 30.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 5,
+          "name": "Bagages - Tube (max : 5 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 4.320,
+          "maxWeight": 5.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 6,
+          "name": "Carburant (max : 136 kg / 50 USG)",
+          "editable": true,
+          "weight": 136.0,
+          "leverArm": 2.630,
+          "maxWeight": 136.0,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
+      "type": "DA40",
+      "callSign": "F-HXET",
+      "weighingReportDate": "06/11/2014",
+      "maxTakeoffWeight": 1200,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 822.0,
+          "leverArm": 2.509,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager avant",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 2.300,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Passagers arrière",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.250,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 4,
+          "name": "Bagages - Std Comp. (max : 30 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.650,
+          "maxWeight": 30.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 5,
+          "name": "Bagages - Tube (max : 5 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 4.320,
+          "maxWeight": 5.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 6,
+          "name": "Carburant (max : 136 kg / 50 USG)",
+          "editable": true,
+          "weight": 136.0,
+          "leverArm": 2.630,
+          "maxWeight": 136.0,
+          "warningIfMaxWeightExceeded": true
         }
       ]
     }
+
   ]
 }
