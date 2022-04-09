@@ -364,6 +364,59 @@
           "warningIfMaxWeightExceeded": true
         }
       ]
+    },
+    {
+      "type": "SR22",
+      "callSign": "F-HVEB",
+      "weighingReportDate": "24/10/2014",
+      "maxTakeoffWeight": 1542,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 1079.0,
+          "leverArm": 3.522,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager avant",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.645,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Passagers arrière",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 4.572,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 4,
+          "name": "Bagages (max : 130 lb / 59 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 5.283,
+          "maxWeight": 59.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 5,
+          "name": "Carburant (max : 220 kg / 81 USG)",
+          "editable": true,
+          "weight": 220.0,
+          "leverArm": 3.934,
+          "maxWeight": 220.0,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
     }
   ]
 }
