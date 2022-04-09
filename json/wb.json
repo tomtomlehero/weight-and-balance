@@ -311,7 +311,59 @@
           "warningIfMaxWeightExceeded": true
         }
       ]
+    },
+    {
+      "type": "SR20",
+      "callSign": "F-HGTL",
+      "weighingReportDate": "23/11/2015",
+      "maxTakeoffWeight": 1360,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 989.0,
+          "leverArm": 3.550,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager avant",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.645,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Passagers arrière",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 4.572,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 4,
+          "name": "Bagages (max : 130 lb / 59 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 5.283,
+          "maxWeight": 59.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 5,
+          "name": "Carburant (max : 152 kg / 56 USG)",
+          "editable": true,
+          "weight": 152.0,
+          "leverArm": 3.907,
+          "maxWeight": 152.0,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
     }
-
   ]
 }
