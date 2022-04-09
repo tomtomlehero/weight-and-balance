@@ -21,19 +21,22 @@ const GRAPH_WIDTH = 450;
 const innerTabHtml = `
   <div class="row">
     <div class="col-sm-6">
-        <table class="table" id="wbTable">
-          <thead>
-          <tr class="text-nowrap">
-            <th>Station</th>
-            <th></th>
-            <th>Masse<br/>(kg)</th>
-            <th class="text-end">Bras de<br/>levier (m)</th>
-            <th class="text-end">Moment<br/>(m.kg)</th>
-          </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+        <figure class="figure">
+            <table class="table" id="wbTable">
+              <thead>
+              <tr class="text-nowrap">
+                <th>Station</th>
+                <th></th>
+                <th>Masse<br/>(kg)</th>
+                <th class="text-end">Bras de<br/>levier (m)</th>
+                <th class="text-end">Moment<br/>(m.kg)</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            <figcaption id="weighingReportInfo" class="figure-caption text-end"></figcaption>
+        </figure>
     </div>
     <div class="col-sm-6">
       <canvas height="450" id="wb" width="550"></canvas>
@@ -110,6 +113,7 @@ function buildWbTable() {
     tableBody.append(wbZeroFuelRow());
     tableBody.append(wbRow(stations[stations.length - 1]));
     tableBody.append(wbTakeoffRow());
+    $("#weighingReportInfo").html(`Basé sur la fiche de pesée du ${selectedAircraft.weighingReportDate}`);
 }
 
 
