@@ -10,13 +10,19 @@ let stationZeroFuelMass;
 let stationTakeoffMass;
 
 
+
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 500;
+
 const GRAPH_TOP = 25;
 const GRAPH_BOTTOM = 375;
 const GRAPH_LEFT = 25;
 const GRAPH_RIGHT = 475;
 
-const GRAPH_HEIGHT = 350;
-const GRAPH_WIDTH = 450;
+const GRAPH_HEIGHT = GRAPH_BOTTOM - GRAPH_TOP;
+const GRAPH_WIDTH = GRAPH_RIGHT - GRAPH_LEFT;
+
+
 
 const innerTabHtml = `
   <div class="row">
@@ -39,7 +45,7 @@ const innerTabHtml = `
         </figure>
     </div>
     <div class="col-sm-6">
-      <canvas height="450" id="wb" width="550"></canvas>
+      <canvas id="wb" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
     </div>
   </div>
 `
@@ -61,7 +67,9 @@ function init(data) {
 
 function buildNavTabs() {
     for (let aircraftId = 0; aircraftId < wb.aircrafts.length; aircraftId++) {
-        $("#nav-tab").append(`<button class="nav-link" id="nav-${aircraftId}-tab" data-bs-toggle="tab">${wb.aircrafts[aircraftId].callSign}</button>`)
+        $("#nav-tab").append(`
+            <button class="nav-link" id="nav-${aircraftId}-tab" data-bs-toggle="tab">${wb.aircrafts[aircraftId].callSign}</button>
+`)
     }
 }
 
@@ -339,16 +347,17 @@ function format0Digit(num) {
 
 function draw() {
 
+    const canvas = document.getElementById("wb");
+    const context = canvas.getContext("2d");
+
+// clear canvas (if another graph was previously drawn)
+    context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
     if (isInWarning()) {
         // Don't draw anything here !
         return;
     }
 
-    const canvas = document.getElementById("wb");
-    const context = canvas.getContext("2d");
-
-// clear canvas (if another graph was previously drawn)
-    context.clearRect(0, 0, 500, 400);
 
 // draw X and Y axis
     context.beginPath();
