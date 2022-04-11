@@ -136,6 +136,59 @@
       ]
     },
     {
+      "type": "WT9",
+      "callSign": "F-HSAJ",
+      "weighingReportDate": "16/06/2021",
+      "maxTakeoffWeight": 600,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 349.3,
+          "leverArm": 2.636,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote (min : 55 kg / max : 120 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.130,
+          "maxWeight": 120,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 3,
+          "name": "Co-pilote (max : 120 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.130,
+          "maxWeight": 120.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 4,
+          "name": "Bagages (max : 40 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.795,
+          "maxWeight": 40.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 5,
+          "name": "Carburant (max : 85,7 kg / 119 l)",
+          "editable": true,
+          "weight": 86.0,
+          "leverArm": 2.580,
+          "maxWeight": 86,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
       "type": "PA28",
       "callSign": "F-GFZA",
       "weighingReportDate": "23/04/2015",
