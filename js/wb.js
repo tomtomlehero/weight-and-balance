@@ -25,7 +25,7 @@ const GRAPH_WIDTH = GRAPH_RIGHT - GRAPH_LEFT;
 
 
 const innerTabHtml = `
-  <div class="row">
+  <div class="row" style="margin-top: 30px;">
     <div class="col-sm-6">
         <figure class="figure">
             <table class="table" id="wbTable">
@@ -344,58 +344,72 @@ function format0Digit(num) {
 
 /**************************************************************************************************************/
 
+const MARGIN = 30;
+
+const WEIGHT_MIN = 750;
+const WEIGHT_MAX = 1250;
+const WEIGHT_STEP = 50;
+
+const POSITION_MIN = 2.35;
+const POSITION_MAX = 2.60;
+const POSITION_STEP = 0.05;
+
+function y(weight) {
+    return ((2 * MARGIN - CANVAS_HEIGHT) * weight + (CANVAS_HEIGHT - MARGIN) * WEIGHT_MAX - MARGIN * WEIGHT_MIN)
+        / (WEIGHT_MAX - WEIGHT_MIN);
+}
+
+function x(position) {
+    return ((CANVAS_WIDTH - 2 * MARGIN) * position + (MARGIN - CANVAS_WIDTH) * POSITION_MIN + MARGIN * POSITION_MAX)
+        / (POSITION_MAX - POSITION_MIN);
+}
 
 function draw() {
 
     const canvas = document.getElementById("wb");
     const context = canvas.getContext("2d");
 
-// clear canvas (if another graph was previously drawn)
     context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     if (isInWarning()) {
-        // Don't draw anything here !
+        context.lineWidth = 10;
+        context.strokeStyle = "red";
+        context.beginPath();
+        context.moveTo(0, 0);
+        context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
+        context.stroke();
+        context.beginPath();
+        context.moveTo(0, CANVAS_HEIGHT);
+        context.lineTo(CANVAS_WIDTH, 0);
+        context.stroke();
         return;
     }
 
-
-// draw X and Y axis
+    context.lineWidth = 5;
+    context.strokeStyle = "#335EA1";
     context.beginPath();
-    context.moveTo(GRAPH_LEFT, GRAPH_BOTTOM);
-    context.lineTo(GRAPH_RIGHT, GRAPH_BOTTOM);
-    context.lineTo(GRAPH_RIGHT, GRAPH_TOP);
+    context.moveTo(0, 0);
+    context.lineTo(CANVAS_WIDTH, 0);
+    context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
+    context.lineTo(0, CANVAS_HEIGHT);
+    context.lineTo(0, 0);
     context.stroke();
 
-// draw reference line at the top of the graph
-    context.beginPath();
-// set light grey color for reference lines
-    context.strokeStyle = "#BBB";
-    context.moveTo(GRAPH_LEFT, GRAPH_TOP);
-    context.lineTo(GRAPH_RIGHT, GRAPH_TOP);
-    context.stroke();
+    context.lineWidth = 0.5;
+    context.strokeStyle = "#3399A1";
+    for (let weight = WEIGHT_MIN; weight <= WEIGHT_MAX; weight += WEIGHT_STEP) {
+        context.beginPath();
+        context.moveTo(MARGIN, y(weight));
+        context.lineTo(CANVAS_WIDTH - MARGIN, y(weight));
+        context.stroke();
+    }
 
-// draw reference line 3/4 up from the bottom of the graph
-    context.beginPath();
-    context.moveTo(GRAPH_LEFT, (GRAPH_HEIGHT) / 4 * 3 + GRAPH_TOP);
-    context.lineTo(GRAPH_RIGHT, (GRAPH_HEIGHT) / 4 * 3 + GRAPH_TOP);
-    context.stroke();
+    for (let position = POSITION_MIN; position <= POSITION_MAX; position += POSITION_STEP) {
+        context.beginPath();
+        context.moveTo(x(position), MARGIN);
+        context.lineTo(x(position), CANVAS_HEIGHT - MARGIN);
+        context.stroke();
+    }
 
-// draw reference line 1/2 way up the graph
-    context.beginPath();
-    context.moveTo(GRAPH_LEFT, (GRAPH_HEIGHT) / 2 + GRAPH_TOP);
-    context.lineTo(GRAPH_RIGHT, (GRAPH_HEIGHT) / 2 + GRAPH_TOP);
-    context.stroke();
-
-// draw reference line 1/4 up from the bottom of the graph
-    context.beginPath();
-    context.moveTo(GRAPH_LEFT, (GRAPH_HEIGHT) / 4 + GRAPH_TOP);
-    context.lineTo(GRAPH_RIGHT, (GRAPH_HEIGHT) / 4 + GRAPH_TOP);
-    context.stroke();
-
-    context.beginPath();
-    context.strokeStyle = "#339";
-    context.moveTo(GRAPH_LEFT, GRAPH_TOP);
-    context.lineTo(someValue, someValue);
-    context.stroke();
 
 }
