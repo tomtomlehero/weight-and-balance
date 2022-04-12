@@ -398,6 +398,13 @@
           "maxWeight": 136.0,
           "warningIfMaxWeightExceeded": true
         }
+      ],
+      "cogEnvelope" : [
+        2.40, 780,
+        2.40, 980,
+        2.48, 1200,
+        2.55, 1200,
+        2.55, 780
       ]
     },
     {

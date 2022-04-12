@@ -2,14 +2,17 @@
 let wb;
 let selectedAircraft;
 
-let someValue = 0;
-
 const stationZeroFuelMassId = "ZFM";
 const stationTakeoffMassId = "TOM";
 let stationZeroFuelMass;
 let stationTakeoffMass;
 
-
+let takeoffLeverArm;
+let takeoffMoment;
+let takeoffWeight;
+let zeroFuelLeverArm;
+let zeroFuelMoment;
+let zeroFuelWeight;
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
@@ -222,7 +225,6 @@ function stationWeightChanged(station, fromComponent, toComponent) {
         $(`#station${station.id}Moment`).html(format3Digit(weight * station.leverArm));
     }
     handleMassExceeded(station, weight);
-    someValue = weight;
     anythingChanged();
 }
 
@@ -241,6 +243,7 @@ function zeroFuelMassChanged() {
 
     let stationZeroFuelWeight = 0;
     let stationZeroFuelMoment = 0;
+    let stationZeroFuelLeverArm;
     const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length - 1; i++) {
         stationZeroFuelWeight += stationWeight(stations[i]);
@@ -248,7 +251,12 @@ function zeroFuelMassChanged() {
     }
     zeroFuelMassWeightInput.val(format0Digit(stationZeroFuelWeight));
     zeroFuelMassMoment.html(format3Digit(stationZeroFuelMoment));
-    zeroFuelMassLeverArm.html(format3Digit(stationZeroFuelMoment / stationZeroFuelWeight));
+    stationZeroFuelLeverArm = stationZeroFuelMoment / stationZeroFuelWeight;
+    zeroFuelMassLeverArm.html(format3Digit(stationZeroFuelLeverArm));
+
+    zeroFuelWeight = stationZeroFuelWeight;
+    zeroFuelMoment = stationZeroFuelMoment;
+    zeroFuelLeverArm = stationZeroFuelLeverArm;
 }
 
 function takeoffMassChanged() {
@@ -267,6 +275,7 @@ function takeoffMassChanged() {
 
     let stationTakeoffWeight = 0;
     let stationTakeoffMoment = 0;
+    let stationTakeoffLeverArm;
     const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length; i++) {
         stationTakeoffWeight += stationWeight(stations[i]);
@@ -274,7 +283,12 @@ function takeoffMassChanged() {
     }
     takeoffMassWeightInput.val(format0Digit(stationTakeoffWeight));
     takeoffMassMoment.html(format3Digit(stationTakeoffMoment));
-    takeoffMassLeverArm.html(format3Digit(stationTakeoffMoment / stationTakeoffWeight));
+    stationTakeoffLeverArm = stationTakeoffMoment / stationTakeoffWeight;
+    takeoffMassLeverArm.html(format3Digit(stationTakeoffLeverArm));
+
+    takeoffWeight = stationTakeoffWeight;
+    takeoffMoment = stationTakeoffMoment;
+    takeoffLeverArm = stationTakeoffLeverArm;
 
     if (stationTakeoffWeight > selectedAircraft.maxTakeoffWeight) {
         $(`#station${stationTakeoffMassId}Row`).addClass("bg-danger");
@@ -338,13 +352,17 @@ function format3Digit(num) {
     return num.toFixed(3).replace('.', ',');
 }
 
+function format2Digit(num) {
+    return num.toFixed(2).replace('.', ',');
+}
+
 function format0Digit(num) {
     return num.toFixed(0);
 }
 
 /**************************************************************************************************************/
 
-const MARGIN = 30;
+const MARGIN = 50;
 
 const WEIGHT_MIN = 750;
 const WEIGHT_MAX = 1250;
@@ -353,6 +371,8 @@ const WEIGHT_STEP = 50;
 const POSITION_MIN = 2.35;
 const POSITION_MAX = 2.60;
 const POSITION_STEP = 0.05;
+
+let context;
 
 function y(weight) {
     return ((2 * MARGIN - CANVAS_HEIGHT) * weight + (CANVAS_HEIGHT - MARGIN) * WEIGHT_MAX - MARGIN * WEIGHT_MIN)
@@ -364,10 +384,17 @@ function x(position) {
         / (POSITION_MAX - POSITION_MIN);
 }
 
+function drawPlot(x, y, color) {
+    context.beginPath();
+    context.arc(x, y, 3, 0, 2 * Math.PI, false);
+    context.fillStyle = color;
+    context.fill();
+}
+
 function draw() {
 
     const canvas = document.getElementById("wb");
-    const context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
 
     context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -385,31 +412,59 @@ function draw() {
         return;
     }
 
-    context.lineWidth = 5;
+    context.lineWidth = 1;
     context.strokeStyle = "#335EA1";
     context.beginPath();
     context.moveTo(0, 0);
     context.lineTo(CANVAS_WIDTH, 0);
     context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
     context.lineTo(0, CANVAS_HEIGHT);
-    context.lineTo(0, 0);
+    context.closePath();
     context.stroke();
 
     context.lineWidth = 0.5;
     context.strokeStyle = "#3399A1";
+    context.fillStyle = "#000";
+    context.font = "14px Calibri";
+    context.textAlign = "right";
     for (let weight = WEIGHT_MIN; weight <= WEIGHT_MAX; weight += WEIGHT_STEP) {
         context.beginPath();
         context.moveTo(MARGIN, y(weight));
         context.lineTo(CANVAS_WIDTH - MARGIN, y(weight));
         context.stroke();
+        context.fillText(weight, MARGIN - 8, y(weight) + 4);
     }
 
+    context.textAlign = "center";
     for (let position = POSITION_MIN; position <= POSITION_MAX; position += POSITION_STEP) {
         context.beginPath();
         context.moveTo(x(position), MARGIN);
         context.lineTo(x(position), CANVAS_HEIGHT - MARGIN);
         context.stroke();
+        context.fillText(format2Digit(position), x(position), CANVAS_HEIGHT - MARGIN + 18);
     }
 
+    const cogEnvelope = selectedAircraft.cogEnvelope;
+    let position;
+    let weight;
+    context.lineWidth = 2;
+    context.strokeStyle = "#000";
+    context.beginPath();
+    for (let i = 0; i < cogEnvelope.length; i++) {
+        if (i % 2 === 0) {
+            position = cogEnvelope[i];
+        } else {
+            weight = cogEnvelope[i];
+            if (i === 1) {
+                context.moveTo(x(position), y(weight));
+            } else {
+                context.lineTo(x(position), y(weight));
+            }
+        }
+    }
+    context.closePath();
+    context.stroke();
 
+    drawPlot(x(zeroFuelLeverArm), y(zeroFuelWeight), '#2250c4');
+    drawPlot(x(takeoffLeverArm), y(takeoffWeight), '#d52e53');
 }
