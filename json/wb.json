@@ -136,8 +136,105 @@
       ]
     },
     {
+      "type": "Aquila",
+      "callSign": "F-HARM",
+      "weighingReportDate": "22/09/2020",
+      "maxTakeoffWeight": 750,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 511.0,
+          "leverArm": 0.429,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote et passager",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 0.515,
+          "maxWeight": 200,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 3,
+          "name": "Bagages (max : 40 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 1.300,
+          "maxWeight": 40.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 4,
+          "name": "Carburant (max : 79 kg / 110 l)",
+          "editable": true,
+          "weight": 79.0,
+          "leverArm": 0.325,
+          "maxWeight": 79.0,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
       "type": "WT9",
       "callSign": "F-HSAJ",
+      "weighingReportDate": "16/06/2021",
+      "maxTakeoffWeight": 600,
+      "stations": [
+        {
+          "id": 1,
+          "name": "Masse à vide",
+          "editable": false,
+          "weight": 349.3,
+          "leverArm": 2.636,
+          "maxWeight": 0,
+          "warningIfMaxWeightExceeded": false
+        },
+        {
+          "id": 2,
+          "name": "Pilote (min : 55 kg / max : 120 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.130,
+          "maxWeight": 120,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 3,
+          "name": "Co-pilote (max : 120 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.130,
+          "maxWeight": 120.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 4,
+          "name": "Bagages (max : 40 kg)",
+          "editable": true,
+          "weight": 0.0,
+          "leverArm": 3.795,
+          "maxWeight": 40.0,
+          "warningIfMaxWeightExceeded": true
+        },
+        {
+          "id": 5,
+          "name": "Carburant (max : 85,7 kg / 119 l)",
+          "editable": true,
+          "weight": 86.0,
+          "leverArm": 2.580,
+          "maxWeight": 86,
+          "warningIfMaxWeightExceeded": true
+        }
+      ]
+    },
+    {
+      "type": "WT9",
+      "callSign": "F-JASH",
       "weighingReportDate": "16/06/2021",
       "maxTakeoffWeight": 600,
       "stations": [
