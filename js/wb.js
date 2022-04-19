@@ -1,6 +1,7 @@
 
 let wb;
 let selectedAircraft;
+let grid;
 
 const stationZeroFuelMassId = "ZFM";
 const stationTakeoffMassId = "TOM";
@@ -16,15 +17,6 @@ let zeroFuelWeight;
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
-
-const GRAPH_TOP = 25;
-const GRAPH_BOTTOM = 375;
-const GRAPH_LEFT = 25;
-const GRAPH_RIGHT = 475;
-
-const GRAPH_HEIGHT = GRAPH_BOTTOM - GRAPH_TOP;
-const GRAPH_WIDTH = GRAPH_RIGHT - GRAPH_LEFT;
-
 
 
 const innerTabHtml = `
@@ -81,6 +73,7 @@ function registerTabEvents() {
     for (let aircraftId = 0; aircraftId < wb.aircrafts.length; aircraftId++) {
         $(`#nav-${aircraftId}-tab`).click(function () {
             selectedAircraft = wb.aircrafts[aircraftId];
+            grid = selectedAircraft.grid;
             $("#nav-tabContent").html(innerTabHtml);
             loadAircraft();
             buildWbTable();
@@ -364,30 +357,17 @@ function format0Digit(num) {
 
 const MARGIN = 50;
 
-const WEIGHT_MIN = 750;
-const WEIGHT_MAX = 1250;
-
-const GRID_Y_MIN = 750;
-const GRID_Y_MAX = 1250;
-const GRID_Y_STEP = 50;
-
-const POSITION_MIN = 2.38;
-const POSITION_MAX = 2.57;
-
-const GRID_X_MIN = 2.40;
-const GRID_X_MAX = 2.55;
-const GRID_X_STEP = 0.05;
-
 let context;
 
+
 function y(weight) {
-    return ((2 * MARGIN - CANVAS_HEIGHT) * weight + (CANVAS_HEIGHT - MARGIN) * WEIGHT_MAX - MARGIN * WEIGHT_MIN)
-        / (WEIGHT_MAX - WEIGHT_MIN);
+    return ((2 * MARGIN - CANVAS_HEIGHT) * weight + (CANVAS_HEIGHT - MARGIN) * grid.weight.max - MARGIN * grid.weight.min)
+        / (grid.weight.max - grid.weight.min);
 }
 
 function x(position) {
-    return ((CANVAS_WIDTH - 2 * MARGIN) * position + (MARGIN - CANVAS_WIDTH) * POSITION_MIN + MARGIN * POSITION_MAX)
-        / (POSITION_MAX - POSITION_MIN);
+    return ((CANVAS_WIDTH - 2 * MARGIN) * position + (MARGIN - CANVAS_WIDTH) * grid.position.min + MARGIN * grid.position.max)
+        / (grid.position.max - grid.position.min);
 }
 
 function drawPlot(x, y, color) {
@@ -433,7 +413,7 @@ function draw() {
     context.fillStyle = "#000";
     context.font = "14px Calibri";
     context.textAlign = "right";
-    for (let weight = GRID_Y_MIN; weight <= GRID_Y_MAX; weight += GRID_Y_STEP) {
+    for (let weight = grid.axes.y.min; weight <= grid.axes.y.max; weight += grid.axes.y.step) {
         context.beginPath();
         context.moveTo(MARGIN, y(weight));
         context.lineTo(CANVAS_WIDTH - MARGIN, y(weight));
@@ -442,7 +422,7 @@ function draw() {
     }
 
     context.textAlign = "center";
-    for (let position = GRID_X_MIN; position <= GRID_X_MAX; position += GRID_X_STEP) {
+    for (let position = grid.axes.x.min; position <= grid.axes.x.max; position += grid.axes.x.step) {
         context.beginPath();
         context.moveTo(x(position), MARGIN);
         context.lineTo(x(position), CANVAS_HEIGHT - MARGIN);
