@@ -355,6 +355,28 @@
           "warningIfMaxWeightExceeded": true
         }
       ],
+      "grid" : {
+        "position" : {
+          "min" : 2.05,
+          "max" : 2.40
+        },
+        "weight" : {
+          "min" : 500,
+          "max" : 1200
+        },
+        "axes" : {
+          "x" : {
+            "min": 2.05,
+            "max": 2.40,
+            "step" : 0.05
+          },
+          "y" : {
+            "min": 500,
+            "max": 1200,
+            "step" : 50
+          }
+        }
+      },
       "cogEnvelope" : [
         2.083, 545,
         2.083, 930,
