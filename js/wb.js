@@ -366,11 +366,17 @@ const MARGIN = 50;
 
 const WEIGHT_MIN = 750;
 const WEIGHT_MAX = 1250;
-const WEIGHT_STEP = 50;
 
-const POSITION_MIN = 2.35;
-const POSITION_MAX = 2.60;
-const POSITION_STEP = 0.05;
+const GRID_Y_MIN = 750;
+const GRID_Y_MAX = 1250;
+const GRID_Y_STEP = 50;
+
+const POSITION_MIN = 2.38;
+const POSITION_MAX = 2.57;
+
+const GRID_X_MIN = 2.40;
+const GRID_X_MAX = 2.55;
+const GRID_X_STEP = 0.05;
 
 let context;
 
@@ -427,7 +433,7 @@ function draw() {
     context.fillStyle = "#000";
     context.font = "14px Calibri";
     context.textAlign = "right";
-    for (let weight = WEIGHT_MIN; weight <= WEIGHT_MAX; weight += WEIGHT_STEP) {
+    for (let weight = GRID_Y_MIN; weight <= GRID_Y_MAX; weight += GRID_Y_STEP) {
         context.beginPath();
         context.moveTo(MARGIN, y(weight));
         context.lineTo(CANVAS_WIDTH - MARGIN, y(weight));
@@ -436,7 +442,7 @@ function draw() {
     }
 
     context.textAlign = "center";
-    for (let position = POSITION_MIN; position <= POSITION_MAX; position += POSITION_STEP) {
+    for (let position = GRID_X_MIN; position <= GRID_X_MAX; position += GRID_X_STEP) {
         context.beginPath();
         context.moveTo(x(position), MARGIN);
         context.lineTo(x(position), CANVAS_HEIGHT - MARGIN);
