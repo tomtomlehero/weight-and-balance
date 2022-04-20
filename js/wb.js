@@ -398,6 +398,7 @@ function draw() {
         return;
     }
 
+/*
     context.lineWidth = 1;
     context.strokeStyle = "#335EA1";
     context.beginPath();
@@ -407,11 +408,12 @@ function draw() {
     context.lineTo(0, CANVAS_HEIGHT);
     context.closePath();
     context.stroke();
+*/
 
     context.lineWidth = 0.5;
     context.strokeStyle = "#3399A1";
     context.fillStyle = "#000";
-    context.font = "14px Calibri";
+    context.font = "12px Calibri";
     context.textAlign = "right";
     for (let weight = grid.axes.y.min; weight <= grid.axes.y.max; weight += grid.axes.y.step) {
         context.beginPath();

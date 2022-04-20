@@ -45,6 +45,34 @@
           "maxWeight": 79.0,
           "warningIfMaxWeightExceeded": true
         }
+      ],
+      "grid" : {
+        "position" : {
+          "min" : 0.42,
+          "max" : 0.53
+        },
+        "weight" : {
+          "min" : 550,
+          "max" : 760
+        },
+        "axes" : {
+          "x" : {
+            "min": 0.42,
+            "max": 0.53,
+            "step" : 0.01
+          },
+          "y" : {
+            "min": 550,
+            "max": 760,
+            "step" : 10
+          }
+        }
+      },
+      "cogEnvelope" : [
+        0.427, 558.0,
+        0.427, 750.0,
+        0.523, 750.0,
+        0.523, 558
       ]
     },
     {
@@ -89,6 +117,34 @@
           "maxWeight": 79.0,
           "warningIfMaxWeightExceeded": true
         }
+      ],
+      "grid" : {
+        "position" : {
+          "min" : 0.42,
+          "max" : 0.53
+        },
+        "weight" : {
+          "min" : 550,
+          "max" : 760
+        },
+        "axes" : {
+          "x" : {
+            "min": 0.42,
+            "max": 0.53,
+            "step" : 0.01
+          },
+          "y" : {
+            "min": 550,
+            "max": 760,
+            "step" : 10
+          }
+        }
+      },
+      "cogEnvelope" : [
+        0.427, 558.0,
+        0.427, 750.0,
+        0.523, 750.0,
+        0.523, 558
       ]
     },
     {
@@ -133,20 +189,48 @@
           "maxWeight": 79.0,
           "warningIfMaxWeightExceeded": true
         }
+      ],
+      "grid" : {
+        "position" : {
+          "min" : 0.42,
+          "max" : 0.53
+        },
+        "weight" : {
+          "min" : 550,
+          "max" : 760
+        },
+        "axes" : {
+          "x" : {
+            "min": 0.42,
+            "max": 0.53,
+            "step" : 0.01
+          },
+          "y" : {
+            "min": 550,
+            "max": 760,
+            "step" : 10
+          }
+        }
+      },
+      "cogEnvelope" : [
+        0.427, 558.0,
+        0.427, 750.0,
+        0.523, 750.0,
+        0.523, 558
       ]
     },
     {
       "type": "Aquila",
       "callSign": "F-HARM",
-      "weighingReportDate": "22/09/2020",
+      "weighingReportDate": "03/03/2022",
       "maxTakeoffWeight": 750,
       "stations": [
         {
           "id": 1,
           "name": "Masse à vide",
           "editable": false,
-          "weight": 511.0,
-          "leverArm": 0.429,
+          "weight": 512.0,
+          "leverArm": 0.428,
           "maxWeight": 0,
           "warningIfMaxWeightExceeded": false
         },
@@ -177,6 +261,34 @@
           "maxWeight": 79.0,
           "warningIfMaxWeightExceeded": true
         }
+      ],
+      "grid" : {
+        "position" : {
+          "min" : 0.42,
+          "max" : 0.53
+        },
+        "weight" : {
+          "min" : 550,
+          "max" : 760
+        },
+        "axes" : {
+          "x" : {
+            "min": 0.42,
+            "max": 0.53,
+            "step" : 0.01
+          },
+          "y" : {
+            "min": 550,
+            "max": 760,
+            "step" : 10
+          }
+        }
+      },
+      "cogEnvelope" : [
+        0.427, 558.0,
+        0.427, 750.0,
+        0.523, 750.0,
+        0.523, 558
       ]
     },
     {
@@ -231,6 +343,28 @@
           "warningIfMaxWeightExceeded": true
         }
       ],
+      "grid" : {
+        "position" : {
+          "min" : 2.69,
+          "max" : 2.84
+        },
+        "weight" : {
+          "min" : 390,
+          "max" : 610
+        },
+        "axes" : {
+          "x" : {
+            "min": 2.69,
+            "max": 2.84,
+            "step" : 0.01
+          },
+          "y" : {
+            "min": 390,
+            "max": 610,
+            "step" : 10
+          }
+        }
+      },
       "cogEnvelope" : [
         2.704, 405.0,
         2.704, 542.5,
@@ -244,7 +378,7 @@
     {
       "type": "WT9",
       "callSign": "F-HVXJ",
-      "weighingReportDate": "16/06/2021",
+      "weighingReportDate": "xx/xx/xxxx",
       "maxTakeoffWeight": 600,
       "stations": [
         {
@@ -293,6 +427,28 @@
           "warningIfMaxWeightExceeded": true
         }
       ],
+      "grid" : {
+        "position" : {
+          "min" : 2.69,
+          "max" : 2.84
+        },
+        "weight" : {
+          "min" : 390,
+          "max" : 610
+        },
+        "axes" : {
+          "x" : {
+            "min": 2.69,
+            "max": 2.84,
+            "step" : 0.01
+          },
+          "y" : {
+            "min": 390,
+            "max": 610,
+            "step" : 10
+          }
+        }
+      },
       "cogEnvelope" : [
         2.704, 405.0,
         2.704, 542.5,
