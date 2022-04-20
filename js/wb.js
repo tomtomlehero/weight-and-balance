@@ -398,7 +398,6 @@ function draw() {
         return;
     }
 
-/*
     context.lineWidth = 1;
     context.strokeStyle = "#335EA1";
     context.beginPath();
@@ -408,7 +407,6 @@ function draw() {
     context.lineTo(0, CANVAS_HEIGHT);
     context.closePath();
     context.stroke();
-*/
 
     context.lineWidth = 0.5;
     context.strokeStyle = "#3399A1";
@@ -438,6 +436,13 @@ function draw() {
     context.fillText("Weight (kg)", -CANVAS_HEIGHT / 2,  12);
     context.restore();
     context.fillText("CoG Position (m)", CANVAS_WIDTH / 2,  CANVAS_HEIGHT - 10);
+
+    drawPlot(140, 28, '#2250c4');
+    drawPlot(280, 28, '#d52e53');
+    context.fillStyle = "#000";
+    context.textAlign = "left";
+    context.fillText("Takeoff Cog", 150, 32);
+    context.fillText("Zero Fuel Cog", 290, 32);
 
     const cogEnvelope = selectedAircraft.cogEnvelope;
     let position;
