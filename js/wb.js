@@ -384,7 +384,7 @@ function reset() {
 
 function drawRedCross() {
     context.lineWidth = 10;
-    context.strokeStyle = "red";
+    context.strokeStyle = "#dc3545";
     context.beginPath();
     context.moveTo(0, 0);
     context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -398,6 +398,18 @@ function drawRedCross() {
 function drawBoundaries() {
     context.lineWidth = 1;
     context.strokeStyle = "#335EA1";
+    context.beginPath();
+    context.moveTo(0, 0);
+    context.lineTo(CANVAS_WIDTH, 0);
+    context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
+    context.lineTo(0, CANVAS_HEIGHT);
+    context.closePath();
+    context.stroke();
+}
+
+function drawRedBoundaries() {
+    context.lineWidth = 15;
+    context.strokeStyle = "#dc3545";
     context.beginPath();
     context.moveTo(0, 0);
     context.lineTo(CANVAS_WIDTH, 0);
@@ -434,7 +446,7 @@ function drawAxesLabel() {
     context.font = "16px Calibri";
     context.save();
     context.rotate(-Math.PI/2);
-    context.fillText("Weight (kg)", -CANVAS_HEIGHT / 2,  12);
+    context.fillText("Weight (kg)", -CANVAS_HEIGHT / 2,  20);
     context.restore();
     context.fillText("CoG Position (m)", CANVAS_WIDTH / 2,  CANVAS_HEIGHT - 10);
 }
@@ -476,6 +488,44 @@ function drawCogPlots() {
     drawPlot(x(takeoffLeverArm), y(takeoffWeight), '#2250c4');
 }
 
+/**
+ * https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
+ */
+function pnpoly(nvert, vertx, verty, testx, testy) {
+    let i;
+    let j;
+    let c = false;
+    for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+        if (((verty[i] > testy) !== (verty[j] > testy)) &&
+            (testx < (vertx[j] - vertx[i]) * (testy - verty[i]) / (verty[j] - verty[i]) + vertx[i])) {
+            c = !c;
+        }
+    }
+    return c;
+}
+
+function pointInPolygon(leverArm, weight) {
+    const cogEnvelope = selectedAircraft.cogEnvelope;
+    let nvert = cogEnvelope.length / 2;
+    let vertx = [];
+    let verty = [];
+    for (let i = 0; i < nvert; i++) {
+        vertx[i] = cogEnvelope[2 * i];
+        verty[i] = cogEnvelope[2 * i + 1];
+    }
+    let testx = leverArm;
+    let testy = weight;
+    return pnpoly(nvert, vertx, verty, testx, testy);
+}
+
+function takeoffCogInPolygon() {
+    return pointInPolygon(takeoffLeverArm, takeoffWeight);
+}
+
+function zeroFuelCogInPolygon() {
+    return pointInPolygon(zeroFuelLeverArm, zeroFuelWeight);
+}
+
 function draw() {
 
     const canvas = document.getElementById("wb");
@@ -492,4 +542,7 @@ function draw() {
     drawLegend();
     drawCogEnvelop();
     drawCogPlots();
+    if (!takeoffCogInPolygon() || !zeroFuelCogInPolygon()) {
+        drawRedBoundaries();
+    }
 }
