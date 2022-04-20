@@ -196,6 +196,7 @@ function registerEvents() {
     const stations = selectedAircraft.stations;
     for (let i = 0; i < stations.length; i++) {
         registerEvent(stations[i]);
+        stations[i].nan = false;
     }
 }
 
