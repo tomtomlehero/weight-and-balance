@@ -355,7 +355,7 @@ function format0Digit(num) {
 
 /**************************************************************************************************************/
 
-const MARGIN = 50;
+const MARGIN = 54;
 
 let context;
 
@@ -431,6 +431,13 @@ function draw() {
         context.stroke();
         context.fillText(format2Digit(position), x(position), CANVAS_HEIGHT - MARGIN + 18);
     }
+
+    context.font = "16px Calibri";
+    context.save();
+    context.rotate(-Math.PI/2);
+    context.fillText("Weight (kg)", -CANVAS_HEIGHT / 2,  12);
+    context.restore();
+    context.fillText("CoG Position (m)", CANVAS_WIDTH / 2,  CANVAS_HEIGHT - 10);
 
     const cogEnvelope = selectedAircraft.cogEnvelope;
     let position;
