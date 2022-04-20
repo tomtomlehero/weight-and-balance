@@ -488,6 +488,14 @@ function drawCogPlots() {
     drawPlot(x(takeoffLeverArm), y(takeoffWeight), '#2250c4');
 }
 
+
+function handleCogBoundaries() {
+    if (!takeoffCogInPolygon() || !zeroFuelCogInPolygon()) {
+        drawRedBoundaries();
+    }
+}
+
+
 /**
  * https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
  */
@@ -536,13 +544,11 @@ function draw() {
         drawRedCross();
         return;
     }
+    handleCogBoundaries();
     // drawBoundaries();
     drawGrid();
     drawAxesLabel();
     drawLegend();
     drawCogEnvelop();
     drawCogPlots();
-    if (!takeoffCogInPolygon() || !zeroFuelCogInPolygon()) {
-        drawRedBoundaries();
-    }
 }
