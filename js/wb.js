@@ -372,7 +372,7 @@ function x(position) {
 
 function drawPlot(x, y, color) {
     context.beginPath();
-    context.arc(x, y, 3, 0, 2 * Math.PI, false);
+    context.arc(x, y, 4, 0, 2 * Math.PI, false);
     context.fillStyle = color;
     context.fill();
 }
@@ -453,6 +453,6 @@ function draw() {
     context.closePath();
     context.stroke();
 
-    drawPlot(x(zeroFuelLeverArm), y(zeroFuelWeight), '#2250c4');
-    drawPlot(x(takeoffLeverArm), y(takeoffWeight), '#d52e53');
+    drawPlot(x(zeroFuelLeverArm), y(zeroFuelWeight), '#d52e53');
+    drawPlot(x(takeoffLeverArm), y(takeoffWeight), '#2250c4');
 }
