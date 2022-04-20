@@ -377,27 +377,24 @@ function drawPlot(x, y, color) {
     context.fill();
 }
 
-function draw() {
-
-    const canvas = document.getElementById("wb");
-    context = canvas.getContext("2d");
-
+function reset() {
     context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
 
-    if (isInWarning()) {
-        context.lineWidth = 10;
-        context.strokeStyle = "red";
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
-        context.stroke();
-        context.beginPath();
-        context.moveTo(0, CANVAS_HEIGHT);
-        context.lineTo(CANVAS_WIDTH, 0);
-        context.stroke();
-        return;
-    }
+function drawRedCross() {
+    context.lineWidth = 10;
+    context.strokeStyle = "red";
+    context.beginPath();
+    context.moveTo(0, 0);
+    context.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
+    context.stroke();
+    context.beginPath();
+    context.moveTo(0, CANVAS_HEIGHT);
+    context.lineTo(CANVAS_WIDTH, 0);
+    context.stroke();
+}
 
+function drawBoundaries() {
     context.lineWidth = 1;
     context.strokeStyle = "#335EA1";
     context.beginPath();
@@ -407,7 +404,9 @@ function draw() {
     context.lineTo(0, CANVAS_HEIGHT);
     context.closePath();
     context.stroke();
+}
 
+function drawGrid() {
     context.lineWidth = 0.5;
     context.strokeStyle = "#3399A1";
     context.fillStyle = "#000";
@@ -420,7 +419,6 @@ function draw() {
         context.stroke();
         context.fillText(weight, MARGIN - 8, y(weight) + 4);
     }
-
     context.textAlign = "center";
     for (let position = grid.axes.x.min; position <= grid.axes.x.max; position += grid.axes.x.step) {
         context.beginPath();
@@ -429,21 +427,27 @@ function draw() {
         context.stroke();
         context.fillText(format2Digit(position), x(position), CANVAS_HEIGHT - MARGIN + 18);
     }
+}
 
+function drawAxesLabel() {
     context.font = "16px Calibri";
     context.save();
     context.rotate(-Math.PI/2);
     context.fillText("Weight (kg)", -CANVAS_HEIGHT / 2,  12);
     context.restore();
     context.fillText("CoG Position (m)", CANVAS_WIDTH / 2,  CANVAS_HEIGHT - 10);
+}
 
+function drawLegend() {
     drawPlot(140, 28, '#2250c4');
     drawPlot(280, 28, '#d52e53');
     context.fillStyle = "#000";
     context.textAlign = "left";
-    context.fillText("Takeoff Cog", 150, 32);
-    context.fillText("Zero Fuel Cog", 290, 32);
+    context.fillText("Takeoff CoG", 150, 32);
+    context.fillText("Zero Fuel CoG", 290, 32);
+}
 
+function drawCogEnvelop() {
     const cogEnvelope = selectedAircraft.cogEnvelope;
     let position;
     let weight;
@@ -464,7 +468,27 @@ function draw() {
     }
     context.closePath();
     context.stroke();
+}
 
+function drawCogPlots() {
     drawPlot(x(zeroFuelLeverArm), y(zeroFuelWeight), '#d52e53');
     drawPlot(x(takeoffLeverArm), y(takeoffWeight), '#2250c4');
+}
+
+function draw() {
+
+    const canvas = document.getElementById("wb");
+    context = canvas.getContext("2d");
+
+    reset();
+    if (isInWarning()) {
+        drawRedCross();
+        return;
+    }
+    // drawBoundaries();
+    drawGrid();
+    drawAxesLabel();
+    drawLegend();
+    drawCogEnvelop();
+    drawCogPlots();
 }
