@@ -21,7 +21,7 @@ const CANVAS_HEIGHT = 500;
 
 const innerTabHtml = `
   <div class="row" style="margin-top: 30px;">
-    <div class="col-sm-6">
+    <div class="col">
         <figure class="figure">
             <table class="table" id="wbTable">
               <thead>
@@ -39,7 +39,7 @@ const innerTabHtml = `
             <figcaption id="weighingReportInfo" class="figure-caption text-end"></figcaption>
         </figure>
     </div>
-    <div class="col-sm-6">
+    <div class="col">
       <canvas id="wb" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
     </div>
   </div>
